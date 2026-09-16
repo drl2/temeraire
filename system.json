@@ -1,0 +1,45 @@
+{
+  "id": "temeraire",
+  "title": "Temeraire",
+  "description": "Game system for the Temeraire tabletop RPG.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": 14,
+    "verified": 14
+  },
+ "authors": [{
+    "name": "Don Lloyd",
+    "url": "YOUR WEBSITE ADDRESS HERE",
+    "email": "YOUR EMAIL ADDRESS HERE",
+    "discord": "YOUR DISCORD USERNAME HERE"
+  }],
+"esmodules": ["temeraire.mjs"],
+"styles": ["temeraire.css"],
+"languages": [{
+    "lang": "en",
+    "name": "English",
+    "path": "lang/en.json"
+  }],
+"packs": [
+
+  ],
+"documentTypes": {
+    "Actor": {
+      "humancharacter": {},
+      "dragoncharacter": {}
+    },
+    "Item": {
+      "duty": {},
+      "desire": {},
+      "resource": {},
+      "equipment": {},
+      "areaofexpertise": {},
+      "connection": {},
+      "bond": {},
+      "trait": {},
+      "ability": {},
+      "crew": {}
+
+    }
+  }
+}

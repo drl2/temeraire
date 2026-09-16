@@ -1,0 +1,10 @@
+{
+  "TYPES": {
+    "Actor": {
+        "humancharacter": "Human PC",
+        "dragoncharacter": "Dragon PC",
+        "npc": "NPC"
+    }
+  }
+}
+
