@@ -1,71 +1,77 @@
 # Temeraire Foundry System Development Plan
 
+## Current status
+
+- Actor models for `humancharacter`, `dragoncharacter`, and `npc` are registered.
+- Item models for all ten declared Item types are registered, including `duty` and `trait`.
+- Human, Dragon, and NPC actor sheets are registered.
+- Each declared Item type has its own sheet class, backed by `BaseItemSheet`.
+- `BaseActorSheet` prepares actor data, editability, owned items grouped by type, and a derived-data hook.
+- The actor template is still empty, and the concrete actor and Item sheets are currently shell classes.
+- Foundry document creation and persistence have not yet been manually verified.
+
+## Next work
+
 1. **Define the game rules contract**
-   - Document actor types, item types, fields, limits, derived values, and roll mechanics.
-   - Decide which fields are editable, calculated, or derived from owned Items.
+   - Document supported actor and Item types, field names, limits, defaults, derived values, and roll mechanics.
+   - Decide which values are editable, calculated, or derived from owned Items.
+   - Resolve the exact `npcType` choices and any remaining model validation requirements.
 
-2. **Correct system registration**
-   - Reconcile declarations in `system.json` with registrations in `temeraire.mjs`.
-   - Add or remove the `npc` actor type consistently.
-   - Register proper models for `duty` and `trait`; currently `duty` maps to `DesireItemModel`, while several imported models are unused.
+2. **Finish and verify data models**
+   - Review schemas in `module/models/actors.mjs` and `module/models/items.mjs`.
+   - Correct and verify field defaults, required values, integer constraints, and min/max ranges.
+   - Test invalid values during document creation and update; confirm they are rejected without corrupting the document.
 
-3. **Finish data models**
-   - Complete schemas in `module/models/actors.mjs` and `module/models/items.mjs`.
-   - Add defaults, validation ranges, and derived data.
-   - Verify that invalid values are rejected cleanly.
+3. **Create Foundry test documents**
+   - Create one Actor of each supported type: human, dragon, and NPC.
+   - Create one Item of every registered type.
+   - Confirm each document loads, saves, duplicates, and reopens without validation errors.
+   - Test valid and invalid values for representative fields in each model family.
 
-4. **Create test documents**
-   - In Foundry, create one actor of each supported type.
-   - Create one Item of every supported type.
-   - Confirm documents load, save, duplicate, and reopen without validation errors.
+4. **Complete shared sheet context**
+   - Keep shared actor behavior in `module/sheets/actors/basepc.mjs`.
+   - Add configured attribute data for reusable controls and type-specific labels or limits.
+   - Add shared Item context where needed in `module/sheets/items/baseitem.mjs`.
+   - Add derived values as display-only data unless the rules require persistence.
 
-5. **Build shared sheet context**
-   - Implement `_prepareContext` in the actor sheets.
-   - Expose actor data, owned items grouped by type, editable state, and derived values.
-   - Remove temporary `console.warn` logging.
+5. **Implement the actor templates and forms**
+   - Build shared markup for biography, attributes, skills, dangers, burdens, and owned Items.
+   - Add editable inputs using Foundry document paths such as `system.attributes.body.value`.
+   - Give Human, Dragon, and NPC sheets their distinct fields and layouts while reusing common controls.
+   - Confirm form submission persists values and read-only users see non-editable output.
 
-6. **Implement the human character sheet**
-   - Build the template structure for biography, attributes, skills, dangers, burdens, and owned Items.
-   - Add editable form fields using Foundry document paths.
-   - Confirm values persist after submitting and reopening.
+6. **Implement Item sheet layouts**
+   - Add a template and field controls for each registered Item sheet.
+   - Share common form behavior through `BaseItemSheet`, but keep type-specific layouts and fields separate.
+   - Confirm numeric, descriptive, and devotion-style Items save and reopen correctly.
 
-7. **Implement the dragon character sheet**
-   - Reuse shared character-sheet structure where appropriate.
-   - Add dragon-specific biography fields such as breed, age, education, and weight class.
-   - Keep human- and dragon-specific presentation separate without duplicating all logic.
+7. **Add Item management**
+   - Support creating, editing, deleting, sorting, and displaying owned Items from actor sheets.
+   - Group owned Items by type using the existing `itemsByType` context.
+   - Confirm empty groups and missing owned Items render cleanly.
 
-8. **Add Item management**
-   - Support creating, editing, deleting, sorting, and displaying owned Items.
-   - Add suitable Item sheets for descriptive and numeric Item types.
-   - Ensure every declared Item type has a usable model and sheet behavior.
-
-9. **Add game interactions**
-   - Implement attribute or skill rolls.
+8. **Add game interactions**
+   - Implement attribute and skill rolls.
    - Add controls for danger boxes, burdens, resources, devotion checks, and similar counters.
    - Use Foundry chat messages and notifications consistently.
 
-10. **Add localization**
-    - Move visible labels, field names, item names, and notifications into `lang/en.json`.
-    - Avoid hard-coded user-facing text in templates and JavaScript.
+9. **Add localization and visual styling**
+   - Move visible labels, field names, item names, and notifications into `lang/en.json`.
+   - Add styles to `less/temeraire.less`, then compile with `lessc less/temeraire.less temeraire.css`.
+   - Test desktop and narrow-window layouts, controls, lists, counters, and empty states.
 
-11. **Build the visual system**
-    - Add styles to `less/temeraire.less`, then compile with:
-      `lessc less/temeraire.less temeraire.css`
-    - Style desktop and narrow-window layouts.
-    - Test form controls, tabs, lists, counters, and empty states in Foundry.
-
-12. **Add regression checks**
+10. **Add regression checks**
     - Test system startup with no console errors.
-    - Test every actor and Item type.
+    - Test every Actor and Item type, including sheet registration.
     - Test form submission, invalid values, deletion, duplication, and reload behavior.
-    - Test both a GM and player user where permissions affect behavior.
+    - Test both GM and player permissions where editing behavior differs.
 
-13. **Package a playable first release**
+11. **Package a playable first release**
     - Update `README.md` with installation, supported features, and known limitations.
     - Replace placeholder author metadata in `system.json`.
     - Increment the system version.
-    - Create a small sample world or compendium content for manual testing.
+    - Create sample Actors, Items, or compendium content for manual testing.
 
-## First milestone
+## Current milestone
 
-All document types register correctly, human and dragon actors can be created, and both sheets can edit and persist their core fields. Everything else can build on that stable foundation.
+The registration and model/sheet scaffolding is in place. The next milestone is a usable Human character sheet with shared context, editable core fields, and persistence verified in Foundry. Dragon and NPC layouts, Item templates, and game interactions follow after that foundation.

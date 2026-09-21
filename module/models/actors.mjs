@@ -112,6 +112,7 @@ export class NPCActorModel extends foundry.abstract.TypeDataModel {
         return {
             look: new fields.StringField(),
             ambition: new fields.StringField(),
+            npcType: new fields.StringField({choices: ["human", "light-weight", "medium-weight", "heavy-weight"]}),
             attributes: new fields.SchemaField({
                 body: new fields.SchemaField({
                     value: new fields.NumberField(abilityScore),

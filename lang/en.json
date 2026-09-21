@@ -5,6 +5,25 @@
         "dragoncharacter": "Dragon PC",
         "npc": "NPC"
     }
+  },
+  "ITEM_TYPES": {
+    "duty": "Duty",
+    "desire": "Desire",
+    "resource": "Resource",
+    "equipment": "Equipment",
+    "areaofexpertise": "Area of Expertise",
+    "connection": "Connection",
+    "bond": "Bond",
+    "trait": "Trait",
+    "ability": "Ability",
+    "crew": "Crew"
+  },
+  "NPC_TYPES": {
+    "human": "Human",
+    "light-weight" : "Light-Weight",
+    "medium-weight": "Medium-Weight",
+    "heavy-weight": "Heavy-Weight"
   }
+
 }
 

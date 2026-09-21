@@ -26,7 +26,8 @@
 "documentTypes": {
     "Actor": {
       "humancharacter": {},
-      "dragoncharacter": {}
+      "dragoncharacter": {},
+      "npc": {}
     },
     "Item": {
       "duty": {},
