@@ -22,28 +22,29 @@
    - Correct and verify field defaults, required values, integer constraints, and min/max ranges.
    - Test invalid values during document creation and update; confirm they are rejected without corrupting the document.
 
-3. **Create Foundry test documents**
-   - Create one Actor of each supported type: human, dragon, and NPC.
-   - Create one Item of every registered type.
-   - Confirm each document loads, saves, duplicates, and reopens without validation errors.
-   - Test valid and invalid values for representative fields in each model family.
-
-4. **Complete shared sheet context**
+3. **Complete shared sheet context**
    - Keep shared actor behavior in `module/sheets/actors/basepc.mjs`.
    - Add configured attribute data for reusable controls and type-specific labels or limits.
    - Add shared Item context where needed in `module/sheets/items/baseitem.mjs`.
    - Add derived values as display-only data unless the rules require persistence.
 
-5. **Implement the actor templates and forms**
+4. **Implement the actor templates and forms**
    - Build shared markup for biography, attributes, skills, dangers, burdens, and owned Items.
    - Add editable inputs using Foundry document paths such as `system.attributes.body.value`.
    - Give Human, Dragon, and NPC sheets their distinct fields and layouts while reusing common controls.
    - Confirm form submission persists values and read-only users see non-editable output.
 
-6. **Implement Item sheet layouts**
+5. **Implement Item sheet layouts**
    - Add a template and field controls for each registered Item sheet.
    - Share common form behavior through `BaseItemSheet`, but keep type-specific layouts and fields separate.
    - Confirm numeric, descriptive, and devotion-style Items save and reopen correctly.
+
+6. **Create and verify Foundry test documents**
+   - Create one Actor of each supported type: human, dragon, and NPC.
+   - Create one Item of every registered type.
+   - Confirm each document loads, saves, duplicates, and reopens without validation errors.
+   - Test valid and invalid values for representative fields in each model family.
+   - Verify the implemented sheets display the saved values and expose the correct editable controls.
 
 7. **Add Item management**
    - Support creating, editing, deleting, sorting, and displaying owned Items from actor sheets.

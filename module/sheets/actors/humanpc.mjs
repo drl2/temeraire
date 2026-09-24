@@ -1,3 +1,3 @@
-import { BaseActorSheet } from "./basepc.mjs";
+import BaseActorSheet from "./basepc.mjs";
 
 export default class HumanPCSheet extends BaseActorSheet {}

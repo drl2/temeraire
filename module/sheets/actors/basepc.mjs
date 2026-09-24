@@ -1,3 +1,6 @@
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+const { ActorSheetV2 } = foundry.applications.sheets;
+
 export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     static DEFAULT_OPTIONS = {
         tag: "form",
@@ -6,6 +9,15 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
             closeOnSubmit: true
         }
     };
+
+      static PARTS = {
+    main: {
+      root: true,
+      template: "systems/temeraire/templates/actor/humanpc.hbs",
+      scrollable: [".items-list.scrollable"]
+    }
+  };
+
 
     async _prepareContext(options) {
         const context = await super._prepareContext(options);

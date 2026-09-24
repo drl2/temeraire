@@ -95,7 +95,7 @@ export class DragonPCActorModel extends PCBaseActorModel {
         schema.bio.breed = new foundry.data.fields.StringField();
         schema.bio.age = new foundry.data.fields.StringField();
         schema.bio.education = new foundry.data.fields.StringField();
-        schema.bio.weightclass = new foundry.data.fields.StringField();
+        schema.bio.weightclass = new foundry.data.fields.StringField({choices: ["light-weight", "medium-weight", "heavy-weight"]});
 
         return schema;
     }
