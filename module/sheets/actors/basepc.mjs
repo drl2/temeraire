@@ -11,11 +11,17 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     };
 
       static PARTS = {
-    main: {
-      root: true,
-      template: "systems/temeraire/templates/actor/humanpc.hbs",
-      scrollable: [".items-list.scrollable"]
-    }
+        header: {
+            template: "systems/temeraire/templates/actor/pcheader.hbs"
+        },
+        sidebar: {
+            template: "systems/temeraire/templates/actor/sidebar.hbs"
+        }
+        // main: {
+        //     root: true,
+        //     template: "systems/temeraire/templates/actor/humanpc.hbs",
+        //     scrollable: [".items-list.scrollable"]
+        // }
   };
 
 
@@ -33,6 +39,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
         context.system = actor.system;
         context.editable = this.isEditable;
         context.itemsByType = items;
+        
         context.derived = this._prepareDerivedData(actor);
 
         return context;

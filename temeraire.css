@@ -1,0 +1,12 @@
+.sheet-header {
+  flex: 0;
+  margin: 2px;
+  padding: 2px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 4px;
+}
+.sheet-header .profile {
+  width: 100px;
+  height: 100px;
+}

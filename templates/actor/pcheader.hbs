@@ -1,0 +1,19 @@
+<header class="sheet-header">
+    <img class="profile" src="{{actor.img}}" alt="{{actor.name}}" data-action="editImage" data-edit="img">
+
+    <div class="identity">
+    <h2>
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'Temeraire.Name'}}">
+    </h2>
+        <label>{{localize 'Temeraire.Look'}}:</label>
+        <input name="look" type="text" value="{{actor.bio.look}}">
+        <label>{{localize 'Temeraire.Pronouns'}}:</label>
+        <input name="pronouns" type="text" value="{{actor.bio.pronouns}}">
+        {{#if isDragon}}
+        <label>{{localize 'Temeraire.WeightClass'}}:</label>
+        <select name="weightclass">
+            {{selectOptions weightclasses selected=actor.bio.weightclass localize=true}}
+        </select>
+        {{/if}}
+    </div>
+</header>
