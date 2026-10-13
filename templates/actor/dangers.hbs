@@ -1,0 +1,51 @@
+<section class="tem-sidebar__dangers">
+    <h4>{{localize "Temeraire.Dangers"}}</h4>
+    <div class="tem-sidebar__danger-list">
+        {{#each dangerRows as |danger|}}
+            <div class="tem-sidebar__danger">
+                <strong>{{localize (concat "Temeraire.DANGERS." danger.name)}}</strong>
+                <input
+                    class="tem-sidebar__danger-value"
+                    type="text"
+                    name="system.dangers.{{danger.name}}.value"
+                    value="{{danger.value}}"
+                >
+                <span class="tem-sidebar__danger-controls">
+                    <span class="tem-sidebar__danger-box-controls">
+                        {{#unless danger.atMinimumBoxes}}
+                            <button
+                                type="button"
+                                data-action="changeDangerBoxes"
+                                data-danger-name="{{danger.name}}"
+                                data-delta="-1"
+                                aria-label="{{localize 'Temeraire.RemoveDangerBox'}}"
+                                title="{{localize 'Temeraire.RemoveDangerBox'}}"
+                            >-</button>
+                        {{/unless}}
+                        {{#unless danger.atMaximumBoxes}}
+                            <button
+                                type="button"
+                                data-action="changeDangerBoxes"
+                                data-danger-name="{{danger.name}}"
+                                data-delta="1"
+                                aria-label="{{localize 'Temeraire.AddDangerBox'}}"
+                                title="{{localize 'Temeraire.AddDangerBox'}}"
+                            >+</button>
+                        {{/unless}}
+                    </span>
+                    <span class="tem-sidebar__danger-checkboxes">
+                        {{#each danger.boxes as |box|}}
+                            <input
+                                type="checkbox"
+                                data-action="updateDangerChecked"
+                                data-danger-name="{{danger.name}}"
+                                aria-label="{{localize (concat "Temeraire.DANGERS." danger.name)}} box {{box.number}}"
+                                {{#if box.checked}}checked{{/if}}
+                            >
+                        {{/each}}
+                    </span>
+                </span>
+            </div>
+        {{/each}}
+    </div>
+</section>

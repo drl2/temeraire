@@ -1,0 +1,21 @@
+<div class="tem-item-sheet-layout">
+    <img class="tem-item-sheet-layout__profile" src="{{document.img}}" alt="{{document.name}}" data-action="editImage" data-edit="img">
+    <section class="tem-devotion-item-sheet tem-item-sheet-layout__content">
+        <label class="tem-devotion-item-sheet__field">
+            <span>{{localize "Temeraire.Name"}}</span>
+            <input type="text" name="name" value="{{document.name}}">
+        </label>
+        <label class="tem-devotion-item-sheet__field">
+            <span>{{localize "Temeraire.Rank"}}</span>
+            <input type="number" name="system.rank" value="{{document.system.rank}}" min="0" max="5" step="1">
+        </label>
+        <label class="tem-devotion-item-sheet__field">
+            <span>{{localize "Temeraire.Checked"}}</span>
+            <input type="number" name="system.checked" value="{{document.system.checked}}" min="0" max="5" step="1">
+        </label>
+        <label class="tem-devotion-item-sheet__denied">
+            <input type="checkbox" name="system.denied" {{#if document.system.denied}}checked{{/if}}>
+            {{localize "Temeraire.Denied"}}
+        </label>
+    </section>
+</div>

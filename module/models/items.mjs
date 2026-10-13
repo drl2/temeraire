@@ -4,8 +4,8 @@ class DevotionItemModel extends foundry.abstract.TypeDataModel {
         const requiredInteger = { required: true, nullable: false, integer: true };
 
         return {
-            rank: new fields.NumberField({ requiredInteger, min: 1, max: 5 }),
-            checked: new fields.NumberField({ requiredInteger, min: 0, max: 5 }),
+            rank: new fields.NumberField({ requiredInteger, min: 0, max: 5, initial: 1 }),
+            checked: new fields.NumberField({ requiredInteger, min: 0, max: 5, initial: 0 }),
             denied: new fields.BooleanField({ required: true, nullable: false, default: false })
         }
     }
@@ -33,7 +33,7 @@ export class ResourceItemModel extends foundry.abstract.TypeDataModel {
         const requiredInteger = { required: true, nullable: false, integer: true };
         
         return {
-            uses: new fields.NumberField({ requiredInteger, min: 1, max: 5 }),
+            uses: new fields.NumberField({ requiredInteger, min: 0, max: 5, initial: 1 }),
         }
     }
 }
@@ -108,7 +108,7 @@ export class CrewItemModel extends foundry.abstract.TypeDataModel {
         const requiredInteger = { required: true, nullable: false, integer: true };
         
         return {
-            rating: new fields.NumberField({ requiredInteger, min: 0, max: 5 }),
+            rating: new fields.NumberField({ requiredInteger, min: 0, max: 5, initial: 1 }),
             description: new fields.StringField({ required: true, nullable: false, initial: "" })
         }
     }

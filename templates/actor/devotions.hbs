@@ -1,0 +1,152 @@
+<section class="tem-devotions">
+	<div class="tem-devotions__columns">
+		<section class="tem-devotions__column" aria-labelledby="tem-devotions-duties-heading">
+			<header class="tem-devotions__header">
+				<h4 id="tem-devotions-duties-heading">{{localize "Temeraire.Duties"}}</h4>
+				<button
+					type="button"
+					data-action="createDevotionItem"
+					data-item-type="duty"
+					aria-label="{{localize 'Temeraire.AddDuty'}}"
+					title="{{localize 'Temeraire.AddDuty'}}"
+				>
+					<i class="fa-solid fa-plus" aria-hidden="true"></i>
+				</button>
+			</header>
+			<div class="tem-devotions__burden-boxes" role="group" aria-label="{{localize 'Temeraire.Duties'}}">
+				<span>{{localize "Temeraire.Burdens"}}</span>
+				{{#each burdenBoxes.duty as |box|}}
+					<input
+						type="checkbox"
+						data-action="updateBurdenChecked"
+						data-burden="duty"
+						aria-label="{{localize 'Temeraire.DutyBurdenBox'}} {{box.number}}"
+						{{#if box.checked}}checked{{/if}}
+					>
+				{{/each}}
+			</div>
+			<div class="tem-devotions__items">
+				{{#each devotionRows.duty as |item|}}
+					<div class="tem-devotions__item">
+						<div class="tem-devotions__item-details">
+							<span class="tem-devotions__item-name">{{item.name}}</span>
+						</div>
+						<button
+							type="button"
+							data-action="editDevotionItem"
+							data-item-id="{{item.id}}"
+							aria-label="{{localize 'Temeraire.EditDuty'}}: {{item.name}}"
+							title="{{localize 'Temeraire.EditDuty'}}"
+						>
+							<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+						</button>
+						<button
+							type="button"
+							data-action="deleteDevotionItem"
+							data-item-id="{{item.id}}"
+							aria-label="{{localize 'Temeraire.DeleteDuty'}}: {{item.name}}"
+							title="{{localize 'Temeraire.DeleteDuty'}}"
+						>
+							<i class="fa-solid fa-trash" aria-hidden="true"></i>
+						</button>
+						<div class="tem-devotions__item-controls">
+							<label class="tem-devotions__denied">
+								<input type="checkbox" data-action="updateDevotionDenied" data-item-id="{{item.id}}" {{#if item.denied}}checked{{/if}}>
+								{{localize "Temeraire.Denied"}}
+							</label>
+							<div class="tem-devotions__rank-controls">
+							<span class="tem-devotions__rank-actions">
+								{{#unless item.atMinimumRank}}
+									<button type="button" data-action="changeDevotionRank" data-item-id="{{item.id}}" data-delta="-1" aria-label="{{localize 'Temeraire.DecreaseRank'}}" title="{{localize 'Temeraire.DecreaseRank'}}">-</button>
+								{{/unless}}
+								{{#unless item.atMaximumRank}}
+									<button type="button" data-action="changeDevotionRank" data-item-id="{{item.id}}" data-delta="1" aria-label="{{localize 'Temeraire.IncreaseRank'}}" title="{{localize 'Temeraire.IncreaseRank'}}">+</button>
+								{{/unless}}
+							</span>
+							<span class="tem-devotions__rank-boxes" role="group" aria-label="{{localize 'Temeraire.DutyRankBoxes'}}">
+								{{#each item.boxes as |box|}}
+									<input type="checkbox" data-action="updateDevotionChecked" data-item-id="{{item.id}}" aria-label="{{localize 'Temeraire.DutyRankBox'}} {{box.number}}" {{#if box.checked}}checked{{/if}}>
+								{{/each}}
+							</span>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</section>
+		<section class="tem-devotions__column" aria-labelledby="tem-devotions-desires-heading">
+			<header class="tem-devotions__header">
+				<h4 id="tem-devotions-desires-heading">{{localize "Temeraire.Desires"}}</h4>
+				<button
+					type="button"
+					data-action="createDevotionItem"
+					data-item-type="desire"
+					aria-label="{{localize 'Temeraire.AddDesire'}}"
+					title="{{localize 'Temeraire.AddDesire'}}"
+				>
+					<i class="fa-solid fa-plus" aria-hidden="true"></i>
+				</button>
+			</header>
+			<div class="tem-devotions__burden-boxes" role="group" aria-label="{{localize 'Temeraire.Desires'}}">
+				<span>{{localize "Temeraire.Burdens"}}</span>
+				{{#each burdenBoxes.desire as |box|}}
+					<input
+						type="checkbox"
+						data-action="updateBurdenChecked"
+						data-burden="desire"
+						aria-label="{{localize 'Temeraire.DesireBurdenBox'}} {{box.number}}"
+						{{#if box.checked}}checked{{/if}}
+					>
+				{{/each}}
+			</div>
+			<div class="tem-devotions__items">
+				{{#each devotionRows.desire as |item|}}
+					<div class="tem-devotions__item">
+						<div class="tem-devotions__item-details">
+							<span class="tem-devotions__item-name">{{item.name}}</span>
+						</div>
+						<button
+							type="button"
+							data-action="editDevotionItem"
+							data-item-id="{{item.id}}"
+							aria-label="{{localize 'Temeraire.EditDesire'}}: {{item.name}}"
+							title="{{localize 'Temeraire.EditDesire'}}"
+						>
+							<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+						</button>
+						<button
+							type="button"
+							data-action="deleteDevotionItem"
+							data-item-id="{{item.id}}"
+							aria-label="{{localize 'Temeraire.DeleteDesire'}}: {{item.name}}"
+							title="{{localize 'Temeraire.DeleteDesire'}}"
+						>
+							<i class="fa-solid fa-trash" aria-hidden="true"></i>
+						</button>
+						<div class="tem-devotions__item-controls">
+							<label class="tem-devotions__denied">
+								<input type="checkbox" data-action="updateDevotionDenied" data-item-id="{{item.id}}" {{#if item.denied}}checked{{/if}}>
+								{{localize "Temeraire.Denied"}}
+							</label>
+							<div class="tem-devotions__rank-controls">
+							<span class="tem-devotions__rank-actions">
+								{{#unless item.atMinimumRank}}
+									<button type="button" data-action="changeDevotionRank" data-item-id="{{item.id}}" data-delta="-1" aria-label="{{localize 'Temeraire.DecreaseRank'}}" title="{{localize 'Temeraire.DecreaseRank'}}">-</button>
+								{{/unless}}
+								{{#unless item.atMaximumRank}}
+									<button type="button" data-action="changeDevotionRank" data-item-id="{{item.id}}" data-delta="1" aria-label="{{localize 'Temeraire.IncreaseRank'}}" title="{{localize 'Temeraire.IncreaseRank'}}">+</button>
+								{{/unless}}
+							</span>
+							<span class="tem-devotions__rank-boxes" role="group" aria-label="{{localize 'Temeraire.DesireRankBoxes'}}">
+								{{#each item.boxes as |box|}}
+									<input type="checkbox" data-action="updateDevotionChecked" data-item-id="{{item.id}}" aria-label="{{localize 'Temeraire.DesireRankBox'}} {{box.number}}" {{#if box.checked}}checked{{/if}}>
+								{{/each}}
+							</span>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</section>
+	</div>
+</section>

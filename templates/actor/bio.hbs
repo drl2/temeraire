@@ -1,0 +1,133 @@
+<section class="tem-bio">
+    <div class="tem-bio__fields">
+        {{#if isDragon}}
+            <label class="tem-bio__field">
+                <span>{{localize 'Temeraire.Breed'}}:</span>
+                <input type="text" name="system.bio.breed" value="{{system.bio.breed}}">
+            </label>
+            <label class="tem-bio__field">
+                <span>{{localize 'Temeraire.Age'}}:</span>
+                <input type="text" name="system.bio.age" value="{{system.bio.age}}">
+            </label>
+            <label class="tem-bio__field">
+                <span>{{localize 'Temeraire.Education'}}:</span>
+                <input type="text" name="system.bio.education" value="{{system.bio.education}}">
+            </label>
+        {{/if}}
+        {{#unless isDragon}}
+            <label class="tem-bio__field">
+                <span>{{localize 'Temeraire.Position'}}:</span>
+                <input type="text" name="system.bio.position" value="{{system.bio.position}}">
+            </label>
+            <label class="tem-bio__field">
+                <span>{{localize 'Temeraire.Nationality'}}:</span>
+                <input type="text" name="system.bio.nationality" value="{{system.bio.nationality}}">
+            </label>
+        {{/unless}}
+        <label class="tem-bio__field">
+            <span>{{localize "Temeraire.ServiceRecord"}}:</span>
+            <input type="text" name="system.bio.servicerecord" value="{{system.bio.servicerecord}}">
+        </label>
+        {{#unless isDragon}}
+            <label class="tem-bio__field">
+                <span>{{localize 'Temeraire.Station'}}:</span>
+                <input type="text" name="system.bio.station" value="{{system.bio.station}}">
+            </label>
+        {{/unless}}
+        <label class="tem-bio__field">
+            <span>{{localize "Temeraire.Temperament"}}:</span>
+            <input type="text" name="system.bio.temperament" value="{{system.bio.temperament}}">
+        </label>
+        <label class="tem-bio__field">
+            <span>{{localize "Temeraire.Distinction"}}:</span>
+            <input type="text" name="system.bio.distinction" value="{{system.bio.distinction}}">
+        </label>
+    </div>
+
+    <section class="tem-bio__items" aria-labelledby="tem-bio__area-of-expertise-heading">
+        <header class="tem-bio__items-header">
+            <h4 id="tem-bio__area-of-expertise-heading">{{localize "Temeraire.AreasOfExpertise"}}</h4>
+            <button
+                type="button"
+                data-action="createAreaOfExpertise"
+                aria-label="{{localize 'Temeraire.AddAreaOfExpertise'}}"
+                title="{{localize 'Temeraire.AddAreaOfExpertise'}}"
+            >
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+        </header>
+        {{#each itemsByType.areaofexpertise as |item|}}
+            <div class="tem-bio__item">
+                <span class="tem-bio__item-name">{{item.name}}</span>
+                <select
+                    class="tem-bio__item-level"
+                    data-area-of-expertise-level="{{item.id}}"
+                    aria-label="{{localize 'Temeraire.Level'}}: {{item.name}}"
+                >
+                    <option value="1" {{#if (eq item.system.level 1)}}selected{{/if}}>{{localize "Temeraire.EXPERTISE_LEVELS.1"}}</option>
+                    <option value="2" {{#if (eq item.system.level 2)}}selected{{/if}}>{{localize "Temeraire.EXPERTISE_LEVELS.2"}}</option>
+                    <option value="3" {{#if (eq item.system.level 3)}}selected{{/if}}>{{localize "Temeraire.EXPERTISE_LEVELS.3"}}</option>
+                </select>
+                <button
+                    type="button"
+                    data-action="editAreaOfExpertise"
+                    data-item-id="{{item.id}}"
+                    aria-label="{{localize 'Temeraire.EditAreaOfExpertise'}}"
+                    title="{{localize 'Temeraire.EditAreaOfExpertise'}}"
+                >
+                    <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+                </button>
+                <button
+                    type="button"
+                    data-action="deleteAreaOfExpertise"
+                    data-item-id="{{item.id}}"
+                    aria-label="{{localize 'Temeraire.DeleteAreaOfExpertise'}}"
+                    title="{{localize 'Temeraire.DeleteAreaOfExpertise'}}"
+                >
+                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                </button>
+            </div>
+        {{/each}}
+    </section>
+
+    <section class="tem-bio__items" aria-labelledby="tem-bio__connections-heading">
+        <header class="tem-bio__items-header">
+            <h4 id="tem-bio__connections-heading">{{localize "Temeraire.Connections"}}</h4>
+            <button
+                type="button"
+                data-action="createConnection"
+                aria-label="{{localize 'Temeraire.AddConnection'}}"
+                title="{{localize 'Temeraire.AddConnection'}}"
+            >
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+        </header>
+        {{#each itemsByType.connection as |item|}}
+            <div class="tem-bio__item">
+                <div class="tem-bio__connection-details">
+                    <span class="tem-bio__connection-name">{{item.name}}</span>
+                    <span class="tem-bio__connection-description">{{item.system.description}}</span>
+                </div>
+                <button
+                    type="button"
+                    data-action="editConnection"
+                    data-item-id="{{item.id}}"
+                    aria-label="{{localize 'Temeraire.EditConnection'}}"
+                    title="{{localize 'Temeraire.EditConnection'}}"
+                >
+                    <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+                </button>
+                <button
+                    type="button"
+                    data-action="deleteConnection"
+                    data-item-id="{{item.id}}"
+                    aria-label="{{localize 'Temeraire.DeleteConnection'}}"
+                    title="{{localize 'Temeraire.DeleteConnection'}}"
+                >
+                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                </button>
+            </div>
+        {{/each}}
+    </section>
+</section>
+

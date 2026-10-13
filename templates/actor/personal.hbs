@@ -1,0 +1,124 @@
+<section class="tem-personal">
+	<section class="tem-bio__items" aria-labelledby="tem-personal-bonds-heading">
+		<header class="tem-bio__items-header">
+			<h4 id="tem-personal-bonds-heading">{{localize "Temeraire.ITEM_TYPES.bond"}}</h4>
+			<button
+				type="button"
+				data-action="createPersonalItem"
+				data-item-type="bond"
+				aria-label="{{localize 'Temeraire.AddBond'}}"
+				title="{{localize 'Temeraire.AddBond'}}"
+			>
+				<i class="fa-solid fa-plus" aria-hidden="true"></i>
+			</button>
+		</header>
+		{{#each itemsByType.bond as |item|}}
+			<div class="tem-bio__item">
+				<details class="tem-bio__connection-details">
+					<summary class="tem-bio__connection-name">{{item.name}}</summary>
+					<div class="tem-bio__connection-description">{{item.system.description}}</div>
+				</details>
+				<button
+					type="button"
+					data-action="editPersonalItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.EditBond'}}: {{item.name}}"
+					title="{{localize 'Temeraire.EditBond'}}"
+				>
+					<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+				</button>
+				<button
+					type="button"
+					data-action="deletePersonalItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.DeleteBond'}}: {{item.name}}"
+					title="{{localize 'Temeraire.DeleteBond'}}"
+				>
+					<i class="fa-solid fa-trash" aria-hidden="true"></i>
+				</button>
+			</div>
+		{{/each}}
+	</section>
+
+	<section class="tem-bio__items" aria-labelledby="tem-personal-traits-heading">
+		<header class="tem-bio__items-header">
+			<h4 id="tem-personal-traits-heading">{{localize "Temeraire.ITEM_TYPES.trait"}}</h4>
+			<button
+				type="button"
+				data-action="createPersonalItem"
+				data-item-type="trait"
+				aria-label="{{localize 'Temeraire.AddTrait'}}"
+				title="{{localize 'Temeraire.AddTrait'}}"
+			>
+				<i class="fa-solid fa-plus" aria-hidden="true"></i>
+			</button>
+		</header>
+		{{#each itemsByType.trait as |item|}}
+			<div class="tem-bio__item">
+				<details class="tem-bio__connection-details">
+					<summary class="tem-bio__connection-name">{{item.name}}</summary>
+					<div class="tem-bio__connection-description">{{item.system.description}}</div>
+				</details>
+				<button
+					type="button"
+					data-action="editPersonalItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.EditTrait'}}: {{item.name}}"
+					title="{{localize 'Temeraire.EditTrait'}}"
+				>
+					<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+				</button>
+				<button
+					type="button"
+					data-action="deletePersonalItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.DeleteTrait'}}: {{item.name}}"
+					title="{{localize 'Temeraire.DeleteTrait'}}"
+				>
+					<i class="fa-solid fa-trash" aria-hidden="true"></i>
+				</button>
+			</div>
+		{{/each}}
+	</section>
+
+	<section class="tem-bio__items" aria-labelledby="tem-personal-abilities-heading">
+		<header class="tem-bio__items-header">
+			<h4 id="tem-personal-abilities-heading">{{localize "Temeraire.ITEM_TYPES.ability"}}</h4>
+			<button
+				type="button"
+				data-action="createPersonalItem"
+				data-item-type="ability"
+				aria-label="{{localize 'Temeraire.AddAbility'}}"
+				title="{{localize 'Temeraire.AddAbility'}}"
+			>
+				<i class="fa-solid fa-plus" aria-hidden="true"></i>
+			</button>
+		</header>
+		{{#each itemsByType.ability as |item|}}
+			<div class="tem-bio__item">
+				<details class="tem-bio__connection-details">
+					<summary class="tem-bio__connection-name">{{item.name}}</summary>
+					<div class="tem-bio__connection-description">{{item.system.description}}</div>
+				</details>
+				<button
+					type="button"
+					data-action="editPersonalItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.EditAbility'}}: {{item.name}}"
+					title="{{localize 'Temeraire.EditAbility'}}"
+				>
+					<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+				</button>
+				<button
+					type="button"
+					data-action="deletePersonalItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.DeleteAbility'}}: {{item.name}}"
+					title="{{localize 'Temeraire.DeleteAbility'}}"
+				>
+					<i class="fa-solid fa-trash" aria-hidden="true"></i>
+				</button>
+			</div>
+		{{/each}}
+	</section>
+</section>

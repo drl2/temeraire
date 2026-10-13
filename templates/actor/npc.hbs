@@ -1,0 +1,50 @@
+<section class="tem-npc-sheet">
+    <header class="tem-npc-sheet__header">
+        <img class="tem-npc-sheet__profile" src="{{actor.img}}" alt="{{actor.name}}" data-action="editImage" data-edit="img">
+        <div class="tem-npc-sheet__identity">
+            <h2>
+                <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'Temeraire.Name'}}">
+            </h2>
+            <label for="npc-look">{{localize "Temeraire.Look"}}:</label>
+            <input id="npc-look" type="text" name="system.look" value="{{system.look}}">
+            <label for="npc-ambition">{{localize "Temeraire.Ambition"}}:</label>
+            <textarea id="npc-ambition" name="system.ambition" rows="2">{{system.ambition}}</textarea>
+            <label for="npc-type">{{localize "Temeraire.NpcType"}}:</label>
+            <select id="npc-type" name="system.npcType">
+                <option value="human" {{#if (eq system.npcType "human")}}selected{{/if}}>{{localize "Temeraire.NPC_TYPES.human"}}</option>
+                <option value="light-weight" {{#if (eq system.npcType "light-weight")}}selected{{/if}}>{{localize "Temeraire.NPC_TYPES.light-weight"}}</option>
+                <option value="medium-weight" {{#if (eq system.npcType "medium-weight")}}selected{{/if}}>{{localize "Temeraire.NPC_TYPES.medium-weight"}}</option>
+                <option value="heavy-weight" {{#if (eq system.npcType "heavy-weight")}}selected{{/if}}>{{localize "Temeraire.NPC_TYPES.heavy-weight"}}</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="tem-npc-sheet__attributes" aria-labelledby="npc-attributes-heading">
+        <h3 id="npc-attributes-heading">{{localize "Temeraire.Attributes"}}</h3>
+        <div class="tem-npc-sheet__attribute">
+            <label for="npc-body-value">{{localize "Temeraire.ATTRIBUTES.body.label"}}</label>
+            <input id="npc-body-value" type="number" name="system.attributes.body.value" value="{{system.attributes.body.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.body.label'}} {{localize 'Temeraire.Value'}}">
+            <input type="text" name="system.attributes.body.descriptor" value="{{system.attributes.body.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.body.label'}} {{localize 'Temeraire.Descriptor'}}">
+        </div>
+        <div class="tem-npc-sheet__attribute">
+            <label for="npc-cunning-value">{{localize "Temeraire.ATTRIBUTES.cunning.label"}}</label>
+            <input id="npc-cunning-value" type="number" name="system.attributes.cunning.value" value="{{system.attributes.cunning.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.cunning.label'}} {{localize 'Temeraire.Value'}}">
+            <input type="text" name="system.attributes.cunning.descriptor" value="{{system.attributes.cunning.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.cunning.label'}} {{localize 'Temeraire.Descriptor'}}">
+        </div>
+        <div class="tem-npc-sheet__attribute">
+            <label for="npc-manners-value">{{localize "Temeraire.ATTRIBUTES.manners.label"}}</label>
+            <input id="npc-manners-value" type="number" name="system.attributes.manners.value" value="{{system.attributes.manners.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.manners.label'}} {{localize 'Temeraire.Value'}}">
+            <input type="text" name="system.attributes.manners.descriptor" value="{{system.attributes.manners.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.manners.label'}} {{localize 'Temeraire.Descriptor'}}">
+        </div>
+        <div class="tem-npc-sheet__attribute">
+            <label for="npc-steel-value">{{localize "Temeraire.ATTRIBUTES.steel.label"}}</label>
+            <input id="npc-steel-value" type="number" name="system.attributes.steel.value" value="{{system.attributes.steel.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.steel.label'}} {{localize 'Temeraire.Value'}}">
+            <input type="text" name="system.attributes.steel.descriptor" value="{{system.attributes.steel.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.steel.label'}} {{localize 'Temeraire.Descriptor'}}">
+        </div>
+    </section>
+
+    <label class="tem-npc-sheet__resistance">
+        <span>{{localize "Temeraire.Resistance"}}</span>
+        <input type="number" name="system.resistance" value="{{system.resistance}}" min="0" step="1">
+    </label>
+</section>

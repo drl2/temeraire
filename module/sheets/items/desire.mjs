@@ -1,3 +1,3 @@
-import BaseItemSheet from "./baseitem.mjs";
+import DevotionItemSheet from "./devotion.mjs";
 
-export default class DesireItemSheet extends BaseItemSheet {}
+export default class DesireItemSheet extends DevotionItemSheet {}

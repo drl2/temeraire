@@ -3,12 +3,12 @@ class PCBaseActorModel extends foundry.abstract.TypeDataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
         const requiredInteger = {required: true, nullable: false, integer: true};
-        const abilityScore = {requiredInteger, min: 0, max: 4};
-        const skillLevel = {requiredInteger, min: 0, max: 3};
-        const dangerLevel = {requiredInteger, min: 0, max: 8};
-        const dangerBoxes = {requiredInteger, min: 2, max: 4};
-        const dangerChecked = {requiredInteger, min: 0, max: 4};
-        const burdenScore = {requiredInteger, min: 0, max: 5};
+        const abilityScore = {requiredInteger, min: 0, max: 4, initial: 0};
+        const skillLevel = {requiredInteger, min: 0, max: 3, initial: 0};
+        const dangerLevel = {requiredInteger, min: 0, max: 8, initial: 0};
+        const dangerBoxes = {requiredInteger, min: 2, max: 4, initial: 2};
+        const dangerChecked = {requiredInteger, min: 0, max: 4, initial: 0};
+        const burdenScore = {requiredInteger, min: 0, max: 5, initial: 0};
 
         return {
             bio: new fields.SchemaField({

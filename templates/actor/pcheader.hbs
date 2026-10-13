@@ -6,9 +6,9 @@
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'Temeraire.Name'}}">
     </h2>
         <label>{{localize 'Temeraire.Look'}}:</label>
-        <input name="look" type="text" value="{{actor.bio.look}}">
+        <input name="system.bio.look" type="text" value="{{system.bio.look}}">
         <label>{{localize 'Temeraire.Pronouns'}}:</label>
-        <input name="pronouns" type="text" value="{{actor.bio.pronouns}}">
+        <input name="system.bio.pronouns" type="text" value="{{system.bio.pronouns}}">
         {{#if isDragon}}
         <label>{{localize 'Temeraire.WeightClass'}}:</label>
         <select name="weightclass">

@@ -1,0 +1,29 @@
+<div class="tem-item-sheet-layout">
+    <img class="tem-item-sheet-layout__profile" src="{{document.img}}" alt="{{document.name}}" data-action="editImage" data-edit="img">
+    <section class="tem-base-item-sheet tem-item-sheet-layout__content">
+        <label class="tem-base-item-sheet__field">
+            <span>{{localize "Temeraire.Name"}}</span>
+            <input type="text" name="name" value="{{document.name}}">
+        </label>
+        {{#each itemFields as |field|}}
+            {{#if field.isBoolean}}
+                <label class="tem-base-item-sheet__checkbox">
+                    <input type="checkbox" name="system.{{field.name}}" {{#if field.value}}checked{{/if}}>
+                    {{localize field.label}}
+                </label>
+            {{else}}
+                {{#if field.isTextarea}}
+                    <label class="tem-base-item-sheet__field">
+                        <span>{{localize field.label}}</span>
+                        <textarea name="system.{{field.name}}" rows="4">{{field.value}}</textarea>
+                    </label>
+                {{else}}
+                    <label class="tem-base-item-sheet__field">
+                        <span>{{localize field.label}}</span>
+                        <input type="{{field.inputType}}" name="system.{{field.name}}" value="{{field.value}}" {{#if (eq field.inputType "number")}}step="1"{{/if}}>
+                    </label>
+                {{/if}}
+            {{/if}}
+        {{/each}}
+    </section>
+</div>

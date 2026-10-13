@@ -1,0 +1,134 @@
+<section class="tem-resources">
+	<label>{{localize "Temeraire.TABS.resources"}}</label>
+
+	<section class="tem-bio__items" aria-labelledby="tem-resources-carried-heading">
+		<header class="tem-bio__items-header">
+			<h4 id="tem-resources-carried-heading">{{localize "Temeraire.CarriedResources"}}</h4>
+			<button
+				type="button"
+				data-action="createResourceItem"
+				data-item-type="resource"
+				aria-label="{{localize 'Temeraire.AddResource'}}"
+				title="{{localize 'Temeraire.AddResource'}}"
+			>
+				<i class="fa-solid fa-plus" aria-hidden="true"></i>
+			</button>
+		</header>
+		{{#each resourceRows as |item|}}
+			<div class="tem-bio__item tem-resources__resource">
+				<div class="tem-bio__connection-details">
+					<span class="tem-bio__connection-name">{{item.name}}</span>
+				</div>
+				<button
+					type="button"
+					data-action="editResourceItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.EditResource'}}: {{item.name}}"
+					title="{{localize 'Temeraire.EditResource'}}"
+				>
+					<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+				</button>
+				<button
+					type="button"
+					data-action="deleteResourceItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.DeleteResource'}}: {{item.name}}"
+					title="{{localize 'Temeraire.DeleteResource'}}"
+				>
+					<i class="fa-solid fa-trash" aria-hidden="true"></i>
+				</button>
+				<span class="tem-resources__uses-boxes" role="group" aria-label="{{localize 'Temeraire.Uses'}}: {{item.name}}">
+					{{#each item.boxes as |box|}}
+						<input type="checkbox" data-action="updateResourceUses" data-item-id="{{item.id}}" aria-label="{{localize 'Temeraire.Uses'}} {{box.number}}" {{#if box.checked}}checked{{/if}}>
+					{{/each}}
+				</span>
+			</div>
+		{{/each}}
+	</section>
+
+	<section class="tem-bio__items" aria-labelledby="tem-resources-equipment-heading">
+		<header class="tem-bio__items-header">
+			<h4 id="tem-resources-equipment-heading">{{localize "Temeraire.ITEM_TYPES.equipment"}}</h4>
+			<button
+				type="button"
+				data-action="createResourceItem"
+				data-item-type="equipment"
+				aria-label="{{localize 'Temeraire.AddEquipment'}}"
+				title="{{localize 'Temeraire.AddEquipment'}}"
+			>
+				<i class="fa-solid fa-plus" aria-hidden="true"></i>
+			</button>
+		</header>
+		{{#each itemsByType.equipment as |item|}}
+			<div class="tem-bio__item">
+				<div class="tem-bio__connection-details">
+					<span class="tem-bio__connection-name">{{item.name}}</span>
+				</div>
+				<button
+					type="button"
+					data-action="editResourceItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.EditEquipment'}}: {{item.name}}"
+					title="{{localize 'Temeraire.EditEquipment'}}"
+				>
+					<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+				</button>
+				<button
+					type="button"
+					data-action="deleteResourceItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.DeleteEquipment'}}: {{item.name}}"
+					title="{{localize 'Temeraire.DeleteEquipment'}}"
+				>
+					<i class="fa-solid fa-trash" aria-hidden="true"></i>
+				</button>
+			</div>
+		{{/each}}
+	</section>
+
+	{{#if isDragon}}
+	<section class="tem-bio__items" aria-labelledby="tem-resources-crews-heading">
+		<header class="tem-bio__items-header">
+			<h4 id="tem-resources-crews-heading">{{localize "Temeraire.Crews"}}</h4>
+			<button
+				type="button"
+				data-action="createResourceItem"
+				data-item-type="crew"
+				aria-label="{{localize 'Temeraire.AddCrew'}}"
+				title="{{localize 'Temeraire.AddCrew'}}"
+			>
+				<i class="fa-solid fa-plus" aria-hidden="true"></i>
+			</button>
+		</header>
+		{{#each itemsByType.crew as |item|}}
+			<div class="tem-bio__item">
+				<details class="tem-bio__connection-details tem-resources__crew-details">
+					<summary class="tem-bio__connection-name">
+						<span>{{item.name}}</span>
+						<span class="tem-resources__crew-rating">{{localize "Temeraire.Rating"}}: {{item.system.rating}}</span>
+					</summary>
+					<div class="tem-bio__connection-description">{{item.system.description}}</div>
+				</details>
+				<button
+					type="button"
+					data-action="editResourceItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.EditCrew'}}: {{item.name}}"
+					title="{{localize 'Temeraire.EditCrew'}}"
+				>
+					<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+				</button>
+				<button
+					type="button"
+					data-action="deleteResourceItem"
+					data-item-id="{{item.id}}"
+					aria-label="{{localize 'Temeraire.DeleteCrew'}}: {{item.name}}"
+					title="{{localize 'Temeraire.DeleteCrew'}}"
+				>
+					<i class="fa-solid fa-trash" aria-hidden="true"></i>
+				</button>
+			</div>
+		{{/each}}
+	</section>
+	{{/if}}
+</section>

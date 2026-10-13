@@ -17,7 +17,17 @@ import AreaOfExpertiseItemSheet from "./module/sheets/items/areaofexpertise.mjs"
 import TraitItemSheet from "./module/sheets/items/trait.mjs";
 
 
-Hooks.once("init", () => {
+Hooks.once("init", async () => {
+     await foundry.applications.handlebars.loadTemplates([
+        "systems/temeraire/templates/actor/bio.hbs",
+        "systems/temeraire/templates/actor/devotions.hbs",
+        "systems/temeraire/templates/actor/personal.hbs",
+        "systems/temeraire/templates/actor/resources.hbs",
+        "systems/temeraire/templates/actor/pcheader.hbs",
+        "systems/temeraire/templates/actor/sidebar.hbs",
+        "systems/temeraire/templates/actor/dangers.hbs"
+    ]);
+
     CONFIG.Actor.dataModels = {
         "humancharacter": HumanPCActorModel,
         "dragoncharacter": DragonPCActorModel,
@@ -59,6 +69,29 @@ Hooks.once("init", () => {
     DocumentSheetConfig.registerSheet(itemClass, "temeraire", AreaOfExpertiseItemSheet, { types: ["areaofexpertise"], makeDefault: true });
     DocumentSheetConfig.registerSheet(itemClass, "temeraire", TraitItemSheet, { types: ["trait"], makeDefault: true });
 
+const BaseItem = CONFIG.Item.documentClass;
+
+/* do this later if I can find good icons */
+// CONFIG.Item.documentClass = class TemeraireItem extends BaseItem {
+//     static getDefaultArtwork(itemData) {
+//         const images = {
+//             duty: "systems/temeraire/assets/items/resource.webp",
+//             desire: "icons/svg/item-bag.svg",
+//             resource: "icons/svg/item-bag.svg",
+//             bond: "icons/svg/item-bag.svg",
+//             connection: "icons/svg/item-bag.svg",
+//             crew: "icons/svg/item-bag.svg",
+//             ability: "icons/svg/item-bag.svg",
+//             areaofexpertise: "icons/svg/item-bag.svg",
+//             trait: "icons/svg/item-bag.svg",
+//             crew: "icons/svg/item-bag.svg"
+//         };
+
+//         return images[itemData.type]
+//             ? { img: images[itemData.type] }
+//             : super.getDefaultArtwork(itemData);
+//     }
+// };
 
 });
 

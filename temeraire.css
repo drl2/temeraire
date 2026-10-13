@@ -10,3 +10,473 @@
   width: 100px;
   height: 100px;
 }
+.sheet-header .identity {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
+  min-width: 0;
+}
+.sheet-header .identity h2 {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.sheet-header .identity input[name="system.bio.pronouns"] {
+  width: 12ch;
+  max-width: 100%;
+}
+.sheet-header .identity input[name="system.bio.look"] {
+  grid-column: 2 / -1;
+}
+.sheet-header .identity select[name="weightclass"] {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.tem-npc-sheet {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.tem-npc-sheet__header {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 1rem;
+}
+.tem-npc-sheet__profile {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.tem-npc-sheet__identity {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.tem-npc-sheet__identity h2 {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.tem-npc-sheet__identity input,
+.tem-npc-sheet__identity select,
+.tem-npc-sheet__identity textarea {
+  width: 100%;
+  min-width: 0;
+}
+.tem-npc-sheet__identity textarea {
+  resize: vertical;
+}
+.tem-npc-sheet__attributes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+}
+.tem-npc-sheet__attributes h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.tem-npc-sheet__attribute {
+  display: grid;
+  grid-template-columns: max-content 4ch minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.tem-npc-sheet__attribute input[type="number"] {
+  width: 4ch;
+  text-align: center;
+}
+.tem-npc-sheet__attribute input[type="text"] {
+  width: 100%;
+  min-width: 0;
+}
+.tem-npc-sheet__resistance {
+  display: grid;
+  grid-template-columns: max-content 6ch;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tem-npc-sheet__resistance input {
+  width: 6ch;
+  text-align: center;
+}
+.tem-sidebar__attribute h4 {
+  margin: 0;
+  text-transform: uppercase;
+}
+.tem-sidebar {
+  width: max-content;
+  max-width: 100%;
+}
+.tem-sidebar__dangers {
+  margin-top: 1rem;
+}
+.tem-sidebar__dangers h4 {
+  text-align: center;
+}
+.application.temeraire-sheet .window-content {
+  overflow-y: auto;
+}
+.tem-sheet-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.tem-sheet-layout__header {
+  flex: 0 0 auto;
+}
+.tem-sheet-layout__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+}
+.tem-sheet-layout__sidebar {
+  flex: 0 0 auto;
+}
+.tem-sheet-main {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.tem-sidebar__attribute + .tem-sidebar__attribute {
+  margin-top: 0.5rem;
+}
+.tem-sidebar__attribute-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tem-sidebar__value {
+  flex: 0 0 3ch;
+  width: 3ch;
+  font: inherit;
+  text-align: center;
+}
+.tem-sidebar__danger-value {
+  width: 4ch;
+  font: inherit;
+  text-align: center;
+}
+.tem-sidebar__danger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 0.25rem;
+}
+.tem-sidebar__danger-controls {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-self: end;
+  align-items: center;
+  gap: 0.35rem;
+}
+.tem-sidebar__danger-box-controls {
+  display: inline-flex;
+  gap: 0.1rem;
+}
+.tem-sidebar__danger-box-controls button {
+  width: 1.1rem;
+  height: 1rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  line-height: 0.9rem;
+}
+.tem-sidebar__danger-checkboxes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+.tem-sidebar__danger-checkboxes input {
+  margin: 0;
+}
+.tem-sidebar__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  width: 100%;
+}
+.tem-sidebar__field span {
+  flex: 1;
+  border-bottom: 0.5px solid currentColor;
+  padding-right: 0.5rem;
+}
+.tem-sidebar__field select {
+  width: max-content;
+  max-width: 100%;
+}
+.tem-bio {
+  display: grid;
+  gap: 0.5rem;
+}
+.tem-bio__fields {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 0.75rem;
+  row-gap: 0.5rem;
+}
+.tem-bio__field {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+.tem-bio__field input {
+  width: 100%;
+  min-width: 0;
+}
+.tem-bio__items {
+  margin-top: 1rem;
+}
+.tem-bio__items-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tem-bio__items-header h4 {
+  margin: 0;
+}
+.tem-bio__item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.tem-resources__resource {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: start;
+}
+.tem-resources__uses-boxes {
+  display: inline-flex;
+  grid-column: 1 / -1;
+  justify-self: end;
+  align-items: center;
+  gap: 0.15rem;
+}
+.tem-resources__uses-boxes input {
+  margin: 0;
+}
+.tem-bio__item-name {
+  flex: 1;
+}
+.tem-bio__item-level {
+  width: max-content;
+  max-width: 100%;
+  white-space: nowrap;
+}
+.tem-bio__connection-details {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+.tem-bio__connection-details > summary {
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.tem-resources__crew-rating {
+  margin-left: 0.5rem;
+  margin-right: 0.25rem;
+  float: right;
+  text-align: right;
+  white-space: nowrap;
+}
+.tem-resources__crew-details {
+  margin-right: 0.5rem;
+}
+.tem-bio__connection-description {
+  white-space: pre-wrap;
+}
+.tem-devotions__columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.tem-devotions__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tem-devotions__header h4 {
+  margin: 0;
+}
+.tem-devotions__burden-boxes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+.tem-devotions__burden-boxes input {
+  margin: 0;
+}
+.tem-devotions__items {
+  display: grid;
+  gap: 0.5rem;
+}
+.tem-devotions__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: start;
+  gap: 0.25rem;
+  padding: 0.5rem;
+}
+.tem-devotions__item-details {
+  display: grid;
+  grid-column: 1;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.tem-devotions__item-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.tem-item-sheet-layout {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+  width: 100%;
+  min-width: 0;
+}
+.tem-item-sheet-layout__profile {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.tem-item-sheet-layout__content {
+  min-width: 0;
+}
+.tem-devotion-item-sheet {
+  display: grid;
+  gap: 1rem;
+}
+.tem-devotion-item-sheet__field {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+.tem-devotion-item-sheet__field input[type="text"],
+.tem-devotion-item-sheet__field input[type="number"] {
+  width: 100%;
+  min-width: 0;
+}
+.tem-devotion-item-sheet__denied {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tem-devotion-item-sheet__denied input {
+  margin: 0;
+}
+.tem-base-item-sheet {
+  display: grid;
+  gap: 1rem;
+}
+.tem-base-item-sheet__field {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+.tem-base-item-sheet__field input[type="text"],
+.tem-base-item-sheet__field input[type="number"],
+.tem-base-item-sheet__field textarea {
+  width: 100%;
+  min-width: 0;
+}
+.tem-base-item-sheet__field textarea {
+  resize: vertical;
+}
+.tem-base-item-sheet__checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tem-base-item-sheet__checkbox input {
+  margin: 0;
+}
+.tem-devotions__item-controls {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.35rem;
+}
+.tem-devotions__denied {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 15px;
+}
+.tem-devotions__denied input {
+  margin: 0;
+}
+.tem-devotions__item > button {
+  align-self: flex-start;
+}
+.tem-devotions__rank-controls {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  gap: 0.35rem;
+}
+.tem-devotions__rank-actions,
+.tem-devotions__rank-boxes {
+  display: inline-flex;
+  align-items: center;
+}
+.tem-devotions__rank-actions {
+  gap: 0.1rem;
+}
+.tem-devotions__rank-actions button {
+  width: 1.1rem;
+  height: 1rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  line-height: 0.9rem;
+}
+.tem-devotions__rank-boxes {
+  gap: 0.15rem;
+}
+.tem-devotions__rank-boxes input {
+  margin: 0;
+}
+.tem-bio__item button[data-action^="edit"],
+.tem-bio__item button[data-action^="delete"],
+.tem-devotions__item button[data-action^="edit"],
+.tem-devotions__item button[data-action^="delete"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+.tem-bio__items-header button,
+.tem-devotions__header button {
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 0.85rem;
+  line-height: 1;
+}

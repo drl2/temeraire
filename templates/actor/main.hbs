@@ -1,0 +1,37 @@
+<div class="tem-sheet-layout">
+	<header class="tem-sheet-layout__header">
+		{{> "systems/temeraire/templates/actor/pcheader.hbs"}}
+	</header>
+	<div class="tem-sheet-layout__body">
+		<aside class="tem-sheet-layout__sidebar">
+			{{> "systems/temeraire/templates/actor/sidebar.hbs"}}
+			{{> "systems/temeraire/templates/actor/dangers.hbs"}}
+		</aside>
+		<main class="tem-sheet-main sheet-tabs tabs {{ tabClasses }}">
+			<nav class="tabs tem-sheet-main__tabs" data-group="primary" role="tablist">
+				{{#each tabs as |tab|}}
+					<a data-action="tab" data-group="{{tab.group}}" data-tab="{{tab.id}}"
+						{{#if tab.cssClass}}class="{{tab.cssClass}}"{{/if}}
+						{{#if tab.tooltip}}data-tooltip="{{tab.tooltip}}"{{/if}}>
+						{{#if tab.icon}}<i class="{{tab.icon}}" inert></i>{{/if}}
+						{{#if tab.label}}<span>{{localize tab.label}}</span>{{/if}}
+					</a>
+				{{/each}}
+			</nav>
+			<div class="tem-sheet-main__content">
+				<section class="tab {{tabs.bio.cssClass}}" id="bio-panel" data-group="primary" data-tab="bio" role="tabpanel" aria-labelledby="bio-tab">
+					{{> "systems/temeraire/templates/actor/bio.hbs"}}
+				</section>
+				<section class="tab {{tabs.devotions.cssClass}}" id="devotions-panel" data-group="primary" data-tab="devotions" role="tabpanel" aria-labelledby="devotions-tab">
+					{{> "systems/temeraire/templates/actor/devotions.hbs"}}
+				</section>
+				<section class="tab {{tabs.personal.cssClass}}" id="personal-panel" data-group="primary" data-tab="personal" role="tabpanel" aria-labelledby="personal-tab">
+					{{> "systems/temeraire/templates/actor/personal.hbs"}}
+				</section>
+				<section class="tab {{tabs.resources.cssClass}}" id="resources-panel" data-group="primary" data-tab="resources" role="tabpanel" aria-labelledby="resources-tab">
+					{{> "systems/temeraire/templates/actor/resources.hbs"}}
+				</section>
+			</div>
+		</main>
+	</div>
+</div>

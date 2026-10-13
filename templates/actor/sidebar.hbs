@@ -1,3 +1,28 @@
 <section class="tem-sidebar">
-    <label>Sidebar</label>
+    {{#each system.attributes as |attribute attributeName|}}
+        <section class="tem-sidebar__attribute">
+            <h4 class="tem-sidebar__attribute-header">
+                <input
+                    class="tem-sidebar__value"
+                    type="number"
+                    name="system.attributes.{{attributeName}}.value"
+                    value="{{attribute.value}}"
+                />
+                {{localize (concat "Temeraire.ATTRIBUTES." attributeName ".label")}}
+            </h4>
+            {{#each attribute as |value fieldName|}}
+                {{#unless (eq fieldName "value")}}
+                    <label class="tem-sidebar__field">
+                        <span>{{localize (concat "Temeraire.ATTRIBUTES." attributeName "." fieldName)}}</span>
+                        <select name="system.attributes.{{attributeName}}.{{fieldName}}">
+                            <option value="0" {{#if (eq value 0)}}selected{{/if}}></option>
+                            <option value="1" {{#if (eq value 1)}}selected{{/if}}>{{localize "Temeraire.SKILL_LEVELS.Trained"}}</option>
+                            <option value="2" {{#if (eq value 2)}}selected{{/if}}>{{localize "Temeraire.SKILL_LEVELS.Adept"}}</option>
+                            <option value="3" {{#if (eq value 3)}}selected{{/if}}>{{localize "Temeraire.SKILL_LEVELS.Master"}}</option>
+                        </select>
+                    </label>
+                {{/unless}}
+            {{/each}}
+        </section>
+    {{/each}}
 </section>

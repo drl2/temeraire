@@ -3,13 +3,113 @@
     "Name": "Name",
     "Look": "Look",
     "Pronouns": "Pronouns",
+    "Breed": "Breed",
+    "Age": "Age",
+    "Education": "Education",
+    "Position": "Position",
+    "Nationality": "Nationality",
+    "Station": "Station",
+    "AddAreaOfExpertise": "Add Area of Expertise",
+    "NewAreaOfExpertise": "New Area of Expertise",
+    "AreasOfExpertise": "Areas of Expertise",
+    "Connections": "Connections",
+    "AddConnection": "Add Connection",
+    "NewConnection": "New Connection",
+    "EditConnection": "Edit Connection",
+    "DeleteConnection": "Delete Connection",
+    "ConfirmDeleteConnection": "Delete {name}? This cannot be undone.",
+    "AddBond": "Add Bond",
+    "NewBond": "New Bond",
+    "EditBond": "Edit Bond",
+    "DeleteBond": "Delete Bond",
+    "AddTrait": "Add Trait",
+    "NewTrait": "New Trait",
+    "EditTrait": "Edit Trait",
+    "DeleteTrait": "Delete Trait",
+    "AddAbility": "Add Ability",
+    "NewAbility": "New Ability",
+    "EditAbility": "Edit Ability",
+    "DeleteAbility": "Delete Ability",
+    "ConfirmDeletePersonalItem": "Delete {name}? This cannot be undone.",
+    "CarriedResources": "Carried Resources",
+    "Crews": "Crews",
+    "AddResource": "Add Resource",
+    "NewResource": "New Resource",
+    "EditResource": "Edit Resource",
+    "DeleteResource": "Delete Resource",
+    "AddEquipment": "Add Equipment",
+    "NewEquipment": "New Equipment",
+    "EditEquipment": "Edit Equipment",
+    "DeleteEquipment": "Delete Equipment",
+    "AddCrew": "Add Crew",
+    "NewCrew": "New Crew",
+    "EditCrew": "Edit Crew",
+    "DeleteCrew": "Delete Crew",
+    "ConfirmDeleteResourceItem": "Delete {name}? This cannot be undone.",
+    "Uses": "Uses",
+    "Rating": "Rating",
+    "Description": "Description",
+    "Rank": "Rank",
+    "Checked": "Checked",
+    "Ambition": "Ambition",
+    "NpcType": "NPC Type",
+    "Attributes": "Attributes",
+    "Descriptor": "Descriptor",
+    "Resistance": "Resistance",
+    "Value": "Value",
+    "Level": "Level",
+    "Dangers": "Dangers",
+    "Duties": "Duties",
+    "Desires": "Desires",
+    "Burdens": "Burdens:",
+    "DutyBurdenBox": "Duty burden box",
+    "DesireBurdenBox": "Desire burden box",
+    "AddDuty": "Add Duty",
+    "AddDesire": "Add Desire",
+    "NewDuty": "New Duty",
+    "NewDesire": "New Desire",
+    "EditDuty": "Edit Duty",
+    "EditDesire": "Edit Desire",
+    "DeleteDuty": "Delete Duty",
+    "DeleteDesire": "Delete Desire",
+    "DutyRankBoxes": "Duty rank boxes",
+    "DesireRankBoxes": "Desire rank boxes",
+    "DutyRankBox": "Duty rank box",
+    "DesireRankBox": "Desire rank box",
+    "IncreaseRank": "Increase Rank",
+    "DecreaseRank": "Decrease Rank",
+    "Denied": "Denied",
+    "ConfirmDeleteDevotion": "Delete {name}? This cannot be undone.",
+    "AddDangerBox": "Add danger box",
+    "RemoveDangerBox": "Remove danger box",
+    "DANGERS": {
+      "dishonor": "Dishonor",
+      "scandal": "Scandal",
+      "stress": "Stress",
+      "wounds": "Wounds"
+    },
+    "EXPERTISE_LEVELS": {
+      "1": "Casual",
+      "2": "Veteran",
+      "3": "Esoteric"
+    },
+    "EditAreaOfExpertise": "Edit Area of Expertise",
+    "DeleteAreaOfExpertise": "Delete Area of Expertise",
+    "ConfirmDeleteAreaOfExpertise": "Delete {name}? This cannot be undone.",
+    "ServiceRecord": "Service Record",
+    "Temperament": "Temperament",
+    "Distinction": "Distinction",
     "WeightClass": "Weight Class",
-    "TYPES": {
-      "Actor": {
-          "humancharacter": "Human PC",
-          "dragoncharacter": "Dragon PC",
-          "npc": "NPC"
-      }
+    "SKILL_LEVELS": {
+      "Trained": "Trained",
+      "Adept": "Adept",
+      "Master": "Master"
+    },
+    "TABS": {
+      "bio": "Bio",
+      "devotions": "Devotions",
+      "personal": "Personal",
+      "resources": "Resources"
     },
     "ITEM_TYPES": {
       "duty": "Duty",
@@ -28,6 +128,51 @@
       "light-weight" : "Light-Weight",
       "medium-weight": "Medium-Weight",
       "heavy-weight": "Heavy-Weight"
+    },
+    "ATTRIBUTES": {
+      "body": {
+        "label": "Body",
+        "agility": "Agility",
+        "force": "Force",
+        "lethality": "Lethality"
+      },
+      "cunning": {
+        "label": "Cunning",
+        "attention": "Attention",
+        "guile": "Guile",
+        "intuition": "Intuition"
+      },
+      "manners": {
+        "label": "Manners",
+        "performance": "Performance",
+        "persuasion": "Persuasion",
+        "propriety": "Propriety"
+      },
+      "steel": {
+        "label": "Steel",
+        "coercion": "Coercion",
+        "direction": "Direction",
+        "endurance": "Endurance"
+      }
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "humancharacter": "Human PC",
+      "dragoncharacter": "Dragon PC",
+      "npc": "NPC"
+    },
+    "Item": {
+      "duty": "Duty",
+      "desire": "Desire",
+      "resource": "Resource",
+      "equipment": "Equipment",
+      "areaofexpertise": "Area of Expertise",
+      "connection": "Connection",
+      "bond": "Bond",
+      "trait": "Trait",
+      "ability": "Ability",
+      "crew": "Crew"
     }
   }
 }
