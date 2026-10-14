@@ -69,29 +69,28 @@ Hooks.once("init", async () => {
     DocumentSheetConfig.registerSheet(itemClass, "temeraire", AreaOfExpertiseItemSheet, { types: ["areaofexpertise"], makeDefault: true });
     DocumentSheetConfig.registerSheet(itemClass, "temeraire", TraitItemSheet, { types: ["trait"], makeDefault: true });
 
-const BaseItem = CONFIG.Item.documentClass;
+    const BaseItem = CONFIG.Item.documentClass;
 
-/* do this later if I can find good icons */
-// CONFIG.Item.documentClass = class TemeraireItem extends BaseItem {
-//     static getDefaultArtwork(itemData) {
-//         const images = {
-//             duty: "systems/temeraire/assets/items/resource.webp",
-//             desire: "icons/svg/item-bag.svg",
-//             resource: "icons/svg/item-bag.svg",
-//             bond: "icons/svg/item-bag.svg",
-//             connection: "icons/svg/item-bag.svg",
-//             crew: "icons/svg/item-bag.svg",
-//             ability: "icons/svg/item-bag.svg",
-//             areaofexpertise: "icons/svg/item-bag.svg",
-//             trait: "icons/svg/item-bag.svg",
-//             crew: "icons/svg/item-bag.svg"
-//         };
+    CONFIG.Item.documentClass = class TemeraireItem extends BaseItem {
+        static getDefaultArtwork(itemData) {
+            const images = {
+                duty: "systems/temeraire/assets/items/duty.svg",
+                desire: "systems/temeraire/assets/items/desire.svg",
+                resource: "systems/temeraire/assets/items/resource.svg",
+                bond: "systems/temeraire/assets/items/bond.svg",
+                connection: "systems/temeraire/assets/items/connection.svg",
+                crew: "systems/temeraire/assets/items/crew.svg",
+                ability: "systems/temeraire/assets/items/ability.svg",
+                areaofexpertise: "systems/temeraire/assets/items/area-of-expertise.svg",
+                trait: "systems/temeraire/assets/items/trait.svg",
+                equipment: "systems/temeraire/assets/items/equipment.svg"
+            };
 
-//         return images[itemData.type]
-//             ? { img: images[itemData.type] }
-//             : super.getDefaultArtwork(itemData);
-//     }
-// };
+            return images[itemData.type]
+                ? { img: images[itemData.type] }
+                : super.getDefaultArtwork(itemData);
+        }
+    };
 
 });
 
