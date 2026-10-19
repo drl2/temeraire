@@ -4,7 +4,7 @@ export default class NPCActorSheet extends BaseActorSheet {
 	static PARTS = {
 		main: {
 			root: true,
-			template: "systems/temeraire/templates/actor/npc.hbs"
+			template: "systems/temeraire/templates/actors/npc.hbs"
 		}
 	};
 }

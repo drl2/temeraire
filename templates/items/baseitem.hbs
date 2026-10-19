@@ -1,9 +1,14 @@
 <div class="tem-item-sheet-layout">
-    <img class="tem-item-sheet-layout__profile" src="{{document.img}}" alt="{{document.name}}" data-action="editImage" data-edit="img">
+    <img class="tem-item-sheet-layout__profile" src="{{document.img}}" alt="{{document.name}}" data-action="editImage" data-edit="img" title="{{localize 'Temeraire.EditImage'}}">
     <section class="tem-base-item-sheet tem-item-sheet-layout__content">
-        <label class="tem-base-item-sheet__field">
+        <label class="tem-base-item-sheet__field{{#if multilineName}} tem-base-item-sheet__field--multiline{{/if}}">
+            {{#if multilineName}}
+            <span>{{localize "Temeraire.Description"}}</span>
+            <textarea name="name" rows="3">{{document.name}}</textarea>
+            {{else}}
             <span>{{localize "Temeraire.Name"}}</span>
             <input type="text" name="name" value="{{document.name}}">
+            {{/if}}
         </label>
         {{#each itemFields as |field|}}
             {{#if field.isBoolean}}
@@ -11,9 +16,31 @@
                     <input type="checkbox" name="system.{{field.name}}" {{#if field.value}}checked{{/if}}>
                     {{localize field.label}}
                 </label>
+            {{else if field.isUsesCheckboxes}}
+                <div class="tem-base-item-sheet__field">
+                    <span>{{localize field.label}}</span>
+                    <span class="tem-base-item-sheet__uses-boxes" role="group" aria-label="{{localize field.label}}">
+                        {{#each field.boxes as |box|}}
+                        <input type="checkbox" data-action="updateUses" aria-label="{{localize 'Temeraire.Uses'}} {{box.number}}" {{#if box.checked}}checked{{/if}}>
+                        {{/each}}
+                    </span>
+                </div>
+            {{else if field.isExpertiseLevel}}
+                <div class="tem-base-item-sheet__field">
+                    <span>{{localize field.label}}</span>
+                    <div class="tem-base-item-sheet__level">
+                        {{#if field.canDecreaseLevel}}
+                        <button class="tem-base-item-sheet__level-button" type="button" data-action="changeExpertiseLevel" data-delta="-1" aria-label="{{localize 'Temeraire.DecreaseLevel'}}">-</button>
+                        {{/if}}
+                        <span class="tem-base-item-sheet__level-value">{{field.value}}</span>
+                        {{#if field.canIncreaseLevel}}
+                        <button class="tem-base-item-sheet__level-button" type="button" data-action="changeExpertiseLevel" data-delta="1" aria-label="{{localize 'Temeraire.IncreaseLevel'}}">+</button>
+                        {{/if}}
+                    </div>
+                </div>
             {{else}}
                 {{#if field.isTextarea}}
-                    <label class="tem-base-item-sheet__field">
+                    <label class="tem-base-item-sheet__field tem-base-item-sheet__field--multiline">
                         <span>{{localize field.label}}</span>
                         <textarea name="system.{{field.name}}" rows="4">{{field.value}}</textarea>
                     </label>

@@ -51,14 +51,15 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
             editResourceItem: this._onEditResourceItem,
             deleteResourceItem: this._onDeleteResourceItem,
             updateResourceUses: this._onUpdateResourceUses,
-            updateBurdenChecked: this._onUpdateBurdenChecked
+            updateBurdenChecked: this._onUpdateBurdenChecked,
+            openChallenge: this._onOpenChallenge
         }
     };
 
     static PARTS = {
         main: {
             root: true,
-            template: "systems/temeraire/templates/actor/main.hbs"
+            template: "systems/temeraire/templates/actors/main.hbs"
         }
     };
 
@@ -356,10 +357,33 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
         const dangerName = target.dataset.dangerName;
         const dangerRow = target.closest(".tem-sidebar__danger");
         const checked = dangerRow.querySelectorAll("input[type='checkbox']:checked").length;
+        const danger = this.actor.system.dangers[dangerName];
         const windowContent = this.element.querySelector(".window-content");
         const scrollTop = windowContent?.scrollTop;
 
-        await this.actor.update({ [`system.dangers.${dangerName}.checked`]: checked });
+        const updates = { [`system.dangers.${dangerName}.checked`]: checked };
+
+        // If all boxes are checked, increment danger level and reset checked
+        if (checked === danger.boxes) {
+            const newLevel = danger.value + 1;
+            updates[`system.dangers.${dangerName}.value`] = newLevel;
+            updates[`system.dangers.${dangerName}.checked`] = 0;
+
+            // Send chat message
+            const dangerLabel = game.i18n.localize(`Temeraire.DANGERS.${dangerName}`);
+            const message = game.i18n.format("Temeraire.DangerLevelIncreased", {
+                character: this.actor.name,
+                danger: dangerLabel,
+                level: newLevel
+            });
+            const fontSize = newLevel > 6 ? "font-size: 1.3em;" : "";
+            await ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: `<strong style="color: #c41c3b;${fontSize}">${message}</strong>`
+            });
+        }
+
+        await this.actor.update(updates);
 
         if (scrollTop === undefined) return;
 
@@ -376,6 +400,248 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
         const checked = burdenRow.querySelectorAll("input[type='checkbox']:checked").length;
 
         await this.actor.update({ [`system.burdens.${burdenName}`]: checked });
+    }
+
+    static async _onOpenChallenge(event, target) {
+        const attributeName = target.dataset.attribute;
+        const skillName = target.dataset.skill;
+        const attribute = this.actor.system.attributes?.[attributeName];
+        if (!attribute || skillName === "value" || typeof attribute[skillName] !== "number") return;
+        const attributeValue = Number(attribute.value) || 0;
+        const skillValue = Number(attribute[skillName]) || 0;
+        const skillLabel = game.i18n.localize(`Temeraire.ATTRIBUTES.${attributeName}.${skillName}`);
+        const trainedBonus = skillValue === 1 ? 1 : 0;
+        const showTrained = skillValue === 1 || skillValue === 2;
+        const trainedIsSelectable = skillValue === 2;
+        const trainedLabelKey = skillValue === 2 ? "Temeraire.SKILL_LEVELS.Adept" : "Temeraire.SKILL_LEVELS.Trained";
+        const showAdept = skillValue === 2;
+        const showMasterSuccess = skillValue === 3;
+        const diceToRoll = attributeValue + trainedBonus;
+        const keepLowest = diceToRoll <= 0;
+        const dice = Array.from({ length: keepLowest ? 2 : diceToRoll });
+        const resources = Array.from(this.actor.items)
+            .filter(item => item.type === "resource")
+            .filter(item => (item.system.uses ?? 0) > 0)
+            .map(item => ({ id: item.id, name: item.name }));
+
+        const content = await foundry.applications.handlebars.renderTemplate(
+            "systems/temeraire/templates/dialogs/challenge.hbs",
+            {
+                actorName: this.actor.name,
+                attributeLabel: game.i18n.localize(`Temeraire.ATTRIBUTES.${attributeName}.label`),
+                attributeValue,
+                skillLabel,
+                skillValue,
+                trainedBonus,
+                showTrained,
+                trainedIsSelectable,
+                trainedLabelKey,
+                showAdept,
+                showMasterSuccess,
+                diceToRoll,
+                keepLowest,
+                dice,
+                resources
+            }
+        );
+
+        let dialogInstance;
+
+        await foundry.applications.api.DialogV2.wait({
+            window: { title: `${game.i18n.localize("Temeraire.Challenge")}: ${skillLabel} - ${this.actor.name}` },
+            content,
+            buttons: [{
+                action: "roll",
+                label: "Temeraire.Roll",
+                type: "button",
+                callback: async () => {
+                    if (!dialogInstance) return;
+                    const formElement = dialogInstance.element.querySelector("form");
+                    const formData = new FormData(formElement);
+                    const circumstance = Number(formData.get("circumstance")) || 0;
+                    const trainedBonusChecked = formData.get("trainedBonus") === "1";
+                    const adeptBonusChecked = formData.get("addOnFail") === "1";
+                    const formidableBonusChecked = formData.get("formidableBonus") === "1";
+                    const resourceId = formData.get("resourceId");
+
+                    const resourceBonus = resourceId ? 1 : 0;
+                    const selectableTrainedBonus = trainedBonusChecked ? 1 : 0;
+                    const finalDiceToRoll = diceToRoll + circumstance + resourceBonus + selectableTrainedBonus;
+                    const adjustedDiceToRoll = Math.max(0, finalDiceToRoll);
+                    const keepLowest = adjustedDiceToRoll <= 0;
+
+                    // Roll the dice
+                    const roll = new Roll(`${keepLowest ? '2d6kl1' : adjustedDiceToRoll + 'd6'}`);
+                    await roll.evaluate();
+
+                    // Determine result based on modifiers
+                    let successCount = 0;
+                    for (const die of roll.dice[0].results) {
+                        // Only count dice that are active (kept, not dropped)
+                        if (die.active && die.result >= 5) successCount++;
+                    }
+
+                    // Apply formidable modifier
+                    let formidableApplied = false;
+                    if (formidableBonusChecked && successCount > 0) {
+                        formidableApplied = true;
+                        successCount--;
+                    }
+
+                    // Apply adept modifier if applicable
+                    let adeptSuccess = false;
+                    if (adeptBonusChecked && successCount === 0) {
+                        adeptSuccess = true;
+                        successCount = 1;
+                    }
+
+                    // Apply master success if applicable
+                    let masterSuccess = skillValue === 3 ? 1 : 0;
+
+                    // Get resource name if one was selected
+                    let resourceName = null;
+                    if (resourceId) {
+                        const resourceItem = this.actor.items.get(resourceId);
+                        if (resourceItem) {
+                            resourceName = resourceItem.name;
+                        }
+                    }
+
+                    const chatContent = await foundry.applications.handlebars.renderTemplate(
+                        "systems/temeraire/templates/chatcards/challengeRoll.hbs",
+                        {
+                            actorName: this.actor.name,
+                            skillLabel,
+                            attributeLabel: game.i18n.localize(`Temeraire.ATTRIBUTES.${attributeName}.label`),
+                            attributeValue,
+                            trainedBonus: skillValue === 1 || trainedBonusChecked ? 1 : 0,
+                            trainedLabel: game.i18n.localize(trainedLabelKey),
+                            circumstance,
+                            resourceName,
+                            diceRolled: adjustedDiceToRoll,
+                            rolls: roll.dice[0].results.map(r => r.result),
+                            successCount,
+                            masterSuccess,
+                            totalHits: successCount + masterSuccess,
+                            adeptSuccess,
+                            formidableApplied,
+                            keepLowest
+                        }
+                    );
+
+                    await ChatMessage.create({
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        content: chatContent,
+                        rolls: [roll]
+                    });
+
+                    // Decrement resource uses if a resource was selected
+                    if (resourceId) {
+                        const resourceItem = this.actor.items.get(resourceId);
+                        if (resourceItem) {
+                            const currentUses = resourceItem.system.uses ?? 0;
+                            await resourceItem.update({ "system.uses": Math.max(0, currentUses - 1) });
+                        }
+                    }
+
+                    return true;
+                }
+            }, {
+                action: "cancel",
+                label: "Temeraire.Cancel",
+                type: "button",
+                callback: () => false
+            }],
+            rejectClose: false,
+            render: (_event, dialog) => {
+                dialogInstance = dialog;
+                const input = dialog.element.querySelector("input[name='circumstance']");
+                const circumstanceDisplay = dialog.element.querySelector("#challenge-circumstance");
+                const trainedCheckbox = dialog.element.querySelector("[name='trainedBonus']");
+                const adeptCheckbox = dialog.element.querySelector("[name='addOnFail']");
+                const formidableCheckbox = dialog.element.querySelector("[name='formidableBonus']");
+                const resourceSelect = dialog.element.querySelector("[name='resourceId']");
+                const diceTotal = dialog.element.querySelector("[data-dice-total]");
+                const diceDisplay = dialog.element.querySelector("[data-dice-display]");
+                const buttons = dialog.element.querySelectorAll("button[data-circumstance-delta]");
+                if (!input || !resourceSelect || !diceTotal || !diceDisplay || !circumstanceDisplay) return;
+
+                // Initialize circumstance display
+                circumstanceDisplay.textContent = String(input.value);
+
+                const updateDiceToRoll = () => {
+                    const value = Number(input.value);
+                    const circumstance = Number.isFinite(value) ? Math.trunc(value) : 0;
+                    const resourceBonus = resourceSelect.value ? 1 : 0;
+                    const selectableTrainedBonus = trainedCheckbox?.checked ? 1 : 0;
+                    const total = diceToRoll + circumstance + resourceBonus + selectableTrainedBonus;
+                    const keepLowest = total <= 0;
+                    const adjustedDiceToRoll = Math.max(0, total);
+                    diceTotal.textContent = String(adjustedDiceToRoll);
+                    diceDisplay.setAttribute(
+                        "aria-label",
+                        `${game.i18n.localize("Temeraire.DiceToRoll")}: ${adjustedDiceToRoll}${keepLowest ? `, ${game.i18n.localize("Temeraire.KeepLowest")}` : ""}`
+                    );
+                    const diceImages = Array.from({ length: keepLowest ? 2 : adjustedDiceToRoll }, () => {
+                        const die = document.createElement("img");
+                        die.src = "systems/temeraire/assets/misc/die.svg";
+                        die.alt = "";
+                        die.setAttribute("aria-hidden", "true");
+                        return die;
+                    });
+                    if (keepLowest) {
+                        const keepLowestLabel = document.createElement("span");
+                        keepLowestLabel.className = "tem-challenge-dialog__keep-lowest";
+                        keepLowestLabel.textContent = game.i18n.localize("Temeraire.KeepLowest");
+                        diceImages.push(keepLowestLabel);
+                    }
+                    diceDisplay.replaceChildren(...diceImages);
+                };
+
+                const clampCircumstance = () => {
+                    const value = Number(input.value);
+                    const normalized = Number.isFinite(value) ? Math.trunc(value) : 0;
+                    const clamped = Math.max(-1, Math.min(1, normalized));
+                    input.value = String(clamped);
+                    circumstanceDisplay.textContent = String(clamped);
+                    for (const button of buttons) {
+                        const delta = Number(button.dataset.circumstanceDelta);
+                        button.disabled = delta < 0 ? input.value === "-1" : input.value === "1";
+                    }
+                    updateDiceToRoll();
+                };
+
+                for (const button of buttons) {
+                    button.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const value = Number(input.value) || 0;
+                        const newValue = value + Number(button.dataset.circumstanceDelta);
+                        const clamped = Math.max(-1, Math.min(1, newValue));
+                        input.value = String(clamped);
+                        circumstanceDisplay.textContent = String(clamped);
+                        clampCircumstance();
+                    });
+                }
+                input.addEventListener("input", updateDiceToRoll);
+                input.addEventListener("change", clampCircumstance);
+                trainedCheckbox?.addEventListener("change", () => {
+                    if (trainedCheckbox.checked && adeptCheckbox) {
+                        adeptCheckbox.checked = false;
+                    }
+                    updateDiceToRoll();
+                });
+                adeptCheckbox?.addEventListener("change", () => {
+                    if (adeptCheckbox.checked && trainedCheckbox) {
+                        trainedCheckbox.checked = false;
+                    }
+                    updateDiceToRoll();
+                });
+                formidableCheckbox?.addEventListener("change", updateDiceToRoll);
+                resourceSelect.addEventListener("change", updateDiceToRoll);
+                clampCircumstance();
+            }
+        });
     }
 
     static async _onChangeDangerBoxes(event, target) {
@@ -434,3 +700,27 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
 
 
 }
+
+// Hook for challenge roll dice display toggle
+Hooks.on("renderChatMessageHTML", (_message, html) => {
+    const diceDisplay = html.querySelector("[data-toggle-dice]");
+    const rollsContainer = html.querySelector("[data-toggle-trigger]");
+    
+    if (diceDisplay && rollsContainer) {
+        rollsContainer.addEventListener("click", (event) => {
+            event.stopPropagation();
+            diceDisplay.classList.toggle("tem-challenge-roll__dice--hidden");
+        });
+    }
+
+    const resultDiv = html.querySelector("[data-toggle-result]");
+    if (resultDiv) {
+        resultDiv.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const description = resultDiv.querySelector(".tem-challenge-roll__result-description");
+            if (description) {
+                description.classList.toggle("tem-challenge-roll__result-description--hidden");
+            }
+        });
+    }
+});

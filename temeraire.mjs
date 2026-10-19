@@ -19,13 +19,13 @@ import TraitItemSheet from "./module/sheets/items/trait.mjs";
 
 Hooks.once("init", async () => {
      await foundry.applications.handlebars.loadTemplates([
-        "systems/temeraire/templates/actor/bio.hbs",
-        "systems/temeraire/templates/actor/devotions.hbs",
-        "systems/temeraire/templates/actor/personal.hbs",
-        "systems/temeraire/templates/actor/resources.hbs",
-        "systems/temeraire/templates/actor/pcheader.hbs",
-        "systems/temeraire/templates/actor/sidebar.hbs",
-        "systems/temeraire/templates/actor/dangers.hbs"
+        "systems/temeraire/templates/actors/bio.hbs",
+        "systems/temeraire/templates/actors/devotions.hbs",
+        "systems/temeraire/templates/actors/personal.hbs",
+        "systems/temeraire/templates/actors/resources.hbs",
+        "systems/temeraire/templates/actors/pcheader.hbs",
+        "systems/temeraire/templates/actors/sidebar.hbs",
+        "systems/temeraire/templates/actors/dangers.hbs"
     ]);
 
     CONFIG.Actor.dataModels = {
@@ -68,6 +68,18 @@ Hooks.once("init", async () => {
     DocumentSheetConfig.registerSheet(itemClass, "temeraire", EquipmentItemSheet, { types: ["equipment"], makeDefault: true });
     DocumentSheetConfig.registerSheet(itemClass, "temeraire", AreaOfExpertiseItemSheet, { types: ["areaofexpertise"], makeDefault: true });
     DocumentSheetConfig.registerSheet(itemClass, "temeraire", TraitItemSheet, { types: ["trait"], makeDefault: true });
+
+    const BaseActor = CONFIG.Actor.documentClass;
+    CONFIG.Actor.documentClass = class TemeraireActor extends BaseActor {
+        static getDefaultArtwork(actorData) {
+            const artwork = super.getDefaultArtwork(actorData);
+            if (actorData.type === "dragoncharacter") {
+                return { ...artwork, img: "systems/temeraire/assets/actors/dragon.svg" };
+            }
+
+            return artwork;
+        }
+    };
 
     const BaseItem = CONFIG.Item.documentClass;
 

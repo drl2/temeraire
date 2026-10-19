@@ -1,0 +1,94 @@
+<div class="tem-challenge-roll">
+	<div class="tem-challenge-roll__header">
+		<h3>{{skillLabel}}</h3>
+		<p>{{actorName}}</p>
+	</div>
+	
+	<div class="tem-challenge-roll__results">
+		<div class="tem-challenge-roll__dice tem-challenge-roll__dice--hidden" data-toggle-dice title="{{localize 'Temeraire.ShowDetail'}}">
+			<div>
+				{{attributeLabel}}: {{attributeValue}}
+			</div>
+			{{#if trainedBonus}}
+			<div>
+				{{trainedLabel}}: {{trainedBonus}}
+			</div>
+			{{/if}}
+			{{#if circumstance}}
+			<div>
+				{{localize "Temeraire.Circumstance"}}: {{circumstance}}
+			</div>
+			{{/if}}
+			{{#if resourceName}}
+			<div>
+				{{resourceName}}: 1
+			</div>
+			{{/if}}
+			<div>
+				<strong>{{localize "Temeraire.Total"}}:</strong> {{diceRolled}}
+			</div>
+		</div>
+		
+		<div class="tem-challenge-roll__rolls" data-toggle-trigger title="{{localize 'Temeraire.ShowDetail'}}">
+			{{#each rolls}}
+			<span class="tem-challenge-roll__die {{#if (gte this 5)}}tem-challenge-roll__die--success{{/if}}">{{this}}</span>
+			{{/each}}
+		</div>
+		</div>
+		
+		<div class="tem-challenge-roll__summary">
+
+			{{#if (gt masterSuccess 0)}}
+			<div class="tem-challenge-roll__master">
+				<em>{{localize "Temeraire.SKILL_LEVELS.Master"}}: +{{masterSuccess}}</em>
+			</div>
+			{{/if}}
+			
+			{{#if adeptSuccess}}
+			<div class="tem-challenge-roll__adept">
+				<em>{{localize "Temeraire.AdeptSuccessOnFail"}}</em>
+			</div>
+			{{/if}}
+			
+			{{#if formidableApplied}}
+			<div class="tem-challenge-roll__formidable">
+				<em>{{localize "Temeraire.FormidableModifier"}} {{localize "Temeraire.Applied"}}</em>
+			</div>
+			{{/if}}
+			
+			{{#if keepLowest}}
+			<div class="tem-challenge-roll__keep-lowest">
+				<em>{{localize "Temeraire.KeepLowest"}}</em>
+			</div>
+			{{/if}}
+
+
+			<div class="tem-challenge-roll__successes">
+			<strong>{{localize "Temeraire.TotalHits"}}</strong>: {{totalHits}}
+		</div>
+		
+		<div class="tem-challenge-roll__result {{#if (eq totalHits 0)}}tem-challenge-roll__result--defeat{{else if (eq totalHits 1)}}tem-challenge-roll__result--unstable{{else if (eq totalHits 2)}}tem-challenge-roll__result--success{{else}}tem-challenge-roll__result--triumphant{{/if}}" data-toggle-result style="cursor: pointer;" title="{{localize 'Temeraire.ShowDetail'}}">
+			{{#if (eq totalHits 0)}}
+			<strong>{{localize "Temeraire.Defeat"}}</strong>
+			<div class="tem-challenge-roll__result-description tem-challenge-roll__result-description--hidden">
+				{{localize "ResultDescriptions.Defeat"}}
+			</div>
+			{{else if (eq totalHits 1)}}
+			<strong>{{localize "Temeraire.UnstableResult"}}</strong>
+			<div class="tem-challenge-roll__result-description tem-challenge-roll__result-description--hidden">
+				{{localize "ResultDescriptions.UnstableResult"}}
+			</div>
+			{{else if (eq totalHits 2)}}
+			<strong>{{localize "Temeraire.Success"}}</strong>
+			<div class="tem-challenge-roll__result-description tem-challenge-roll__result-description--hidden">
+				{{localize "ResultDescriptions.Success"}}
+			</div>
+			{{else}}
+			<strong>{{localize "Temeraire.TriumphantSuccess"}}</strong>
+			<div class="tem-challenge-roll__result-description tem-challenge-roll__result-description--hidden">
+				{{localize "ResultDescriptions.TriumphantSuccess"}}
+			</div>
+			{{/if}}
+		</div>
+	</div>
+</div>

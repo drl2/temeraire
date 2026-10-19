@@ -1,18 +1,35 @@
 <div class="tem-item-sheet-layout">
-    <img class="tem-item-sheet-layout__profile" src="{{document.img}}" alt="{{document.name}}" data-action="editImage" data-edit="img">
+    <img class="tem-item-sheet-layout__profile" src="{{document.img}}" alt="{{document.name}}" data-action="editImage" data-edit="img" title="{{localize 'Temeraire.EditImage'}}">
     <section class="tem-devotion-item-sheet tem-item-sheet-layout__content">
-        <label class="tem-devotion-item-sheet__field">
+        <label class="tem-devotion-item-sheet__field{{#if multilineName}} tem-devotion-item-sheet__field--multiline{{/if}}">
+            {{#if multilineName}}
+            <span>{{localize "Temeraire.Description"}}</span>
+            <textarea name="name" rows="3">{{document.name}}</textarea>
+            {{else}}
             <span>{{localize "Temeraire.Name"}}</span>
             <input type="text" name="name" value="{{document.name}}">
+            {{/if}}
         </label>
-        <label class="tem-devotion-item-sheet__field">
+        <div class="tem-devotion-item-sheet__field">
             <span>{{localize "Temeraire.Rank"}}</span>
-            <input type="number" name="system.rank" value="{{document.system.rank}}" min="0" max="5" step="1">
-        </label>
-        <label class="tem-devotion-item-sheet__field">
+            <div class="tem-devotion-item-sheet__rank">
+                {{#if canDecreaseRank}}
+                <button class="tem-devotion-item-sheet__rank-button" type="button" data-action="changeRank" data-delta="-1" aria-label="{{localize 'Temeraire.DecreaseRank'}}">-</button>
+                {{/if}}
+                <span class="tem-devotion-item-sheet__rank-value">{{document.system.rank}}</span>
+                {{#if canIncreaseRank}}
+                <button class="tem-devotion-item-sheet__rank-button" type="button" data-action="changeRank" data-delta="1" aria-label="{{localize 'Temeraire.IncreaseRank'}}">+</button>
+                {{/if}}
+            </div>
+        </div>
+        <div class="tem-devotion-item-sheet__field">
             <span>{{localize "Temeraire.Checked"}}</span>
-            <input type="number" name="system.checked" value="{{document.system.checked}}" min="0" max="5" step="1">
-        </label>
+            <span class="tem-devotions__rank-boxes" role="group" aria-label="{{checkedBoxGroupLabel}}">
+                {{#each checkedBoxes as |box|}}
+                <input type="checkbox" data-action="updateChecked" aria-label="{{box.label}}" {{#if box.checked}}checked{{/if}}>
+                {{/each}}
+            </span>
+        </div>
         <label class="tem-devotion-item-sheet__denied">
             <input type="checkbox" name="system.denied" {{#if document.system.denied}}checked{{/if}}>
             {{localize "Temeraire.Denied"}}

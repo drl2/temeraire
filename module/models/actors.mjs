@@ -131,7 +131,8 @@ export class NPCActorModel extends foundry.abstract.TypeDataModel {
                     descriptor: new fields.StringField()
                 })
             }),
-            resistance: new fields.NumberField({requiredInteger, min: 0})
+            resistance: new fields.NumberField({requiredInteger, min: 0}),
+            notes: new fields.StringField()
         };
     }
 }

@@ -56,6 +56,31 @@
     "Attributes": "Attributes",
     "Descriptor": "Descriptor",
     "Resistance": "Resistance",
+    "Notes": "Notes",
+    "Challenge": "Challenge",
+    "Roll": "Roll",
+    "Cancel": "Cancel",
+    "Actor": "Actor",
+    "Attribute": "Attribute",
+    "Skill": "Skill",
+    "DiceToRoll": "Dice to Roll",
+    "KeepLowest": "Unskilled roll: Keeping lowest",
+    "ShowDetail": "Show Detail",
+    "Total": "Total",
+    "TotalHits": "Total Hits",
+    "Applied": "applied",
+    "Defeat": "Defeat",
+    "UnstableResult": "Unstable result",
+    "Success": "Success",
+    "TriumphantSuccess": "Triumphant success",
+    "BonusDice": "Bonus Dice",
+    "SuccessModifiers": "Success Modifiers",
+    "AdeptSuccessOnFail": "Adept: One success on fail",
+    "FormidableModifier": "Formidable (-1)",
+    "Circumstance": "Circumstance",
+    "None": "None",
+    "DecreaseCircumstance": "Decrease circumstance",
+    "IncreaseCircumstance": "Increase circumstance",
     "Value": "Value",
     "Level": "Level",
     "Dangers": "Dangers",
@@ -82,6 +107,7 @@
     "ConfirmDeleteDevotion": "Delete {name}? This cannot be undone.",
     "AddDangerBox": "Add danger box",
     "RemoveDangerBox": "Remove danger box",
+    "DangerLevelIncreased": "{character}'s {danger} level has increased to {level}.",
     "DANGERS": {
       "dishonor": "Dishonor",
       "scandal": "Scandal",
@@ -174,6 +200,18 @@
       "ability": "Ability",
       "crew": "Crew"
     }
+  },
+  "ResultTypes": {
+    "Defeat": "Defeat",
+    "UnstableResult": "Unstable Result",
+    "Success": "Success",
+    "TriumphantSuccess": "Triumphant Success"
+  },
+  "ResultDescriptions": {
+    "Defeat": "Whatever you hoped for, this isn't it. The GM gets to say what happens.",
+    "UnstableResult": "You're on the precipice of success, but you have to pay an additional cost or face an additional complication to get what you wanted.",
+    "Success": "You achieve your priority in full, without cost, complication, or reduced effect.",
+    "TriumphantSuccess": "You achieve your priority and then some. The extra effect is determined by the GM."
   }
 }
 

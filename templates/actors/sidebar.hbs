@@ -12,15 +12,22 @@
             </h4>
             {{#each attribute as |value fieldName|}}
                 {{#unless (eq fieldName "value")}}
-                    <label class="tem-sidebar__field">
-                        <span>{{localize (concat "Temeraire.ATTRIBUTES." attributeName "." fieldName)}}</span>
-                        <select name="system.attributes.{{attributeName}}.{{fieldName}}">
+                    <div class="tem-sidebar__field">
+                        <button
+                            class="tem-sidebar__challenge"
+                            type="button"
+                            data-action="openChallenge"
+                            data-attribute="{{attributeName}}"
+                            data-skill="{{fieldName}}"
+                            title="{{localize 'Temeraire.RollChallenge'}}"
+                        >{{localize (concat "Temeraire.ATTRIBUTES." attributeName "." fieldName)}}</button>
+                        <select name="system.attributes.{{attributeName}}.{{fieldName}}" aria-label="{{localize (concat 'Temeraire.ATTRIBUTES.' attributeName '.' fieldName)}}">
                             <option value="0" {{#if (eq value 0)}}selected{{/if}}></option>
                             <option value="1" {{#if (eq value 1)}}selected{{/if}}>{{localize "Temeraire.SKILL_LEVELS.Trained"}}</option>
                             <option value="2" {{#if (eq value 2)}}selected{{/if}}>{{localize "Temeraire.SKILL_LEVELS.Adept"}}</option>
                             <option value="3" {{#if (eq value 3)}}selected{{/if}}>{{localize "Temeraire.SKILL_LEVELS.Master"}}</option>
                         </select>
-                    </label>
+                    </div>
                 {{/unless}}
             {{/each}}
         </section>

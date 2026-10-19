@@ -83,20 +83,46 @@
     resize: vertical;
 }
 
-.tem-npc-sheet__attributes {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem 1rem;
+.tem-npc-sheet__multiline-label {
+    align-self: start;
 }
 
-.tem-npc-sheet__attributes h3 {
-    grid-column: 1 / -1;
+.tem-npc-sheet__details {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    min-width: 0;
+}
+
+.tem-npc-sheet__details > h3,
+.tem-npc-sheet__details > h5 {
     margin: 0;
+}
+
+.tem-npc-sheet__details-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: start;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.tem-npc-sheet__attributes {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.tem-npc-sheet__details-side {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    min-width: 0;
 }
 
 .tem-npc-sheet__attribute {
     display: grid;
-    grid-template-columns: max-content 4ch minmax(0, 1fr);
+    grid-template-columns: 8ch 4ch minmax(0, 1fr);
     align-items: center;
     gap: 0.5rem;
     min-width: 0;
@@ -108,7 +134,7 @@
 }
 
 .tem-npc-sheet__attribute input[type="text"] {
-    width: 100%;
+    width: 60%;
     min-width: 0;
 }
 
@@ -122,6 +148,24 @@
 .tem-npc-sheet__resistance input {
     width: 6ch;
     text-align: center;
+}
+
+.tem-npc-sheet__notes {
+    display: grid;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.tem-npc-sheet__notes textarea {
+    width: 100%;
+    min-width: 0;
+    resize: vertical;
+}
+
+@media (max-width: 640px) {
+    .tem-npc-sheet__details-columns {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 
 .tem-sidebar__attribute h4 {
@@ -250,9 +294,220 @@
     padding-right: 0.5rem;
 }
 
+.tem-sidebar__challenge {
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-start;
+    padding: 0 0.5rem 0 0;
+    border: 0;
+    border-bottom: 0.5px solid currentColor;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
 .tem-sidebar__field select {
     width: max-content;
     max-width: 100%;
+}
+
+.tem-challenge-dialog__fieldsets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.tem-challenge-dialog__modifiers {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.tem-challenge-dialog__successes {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.tem-challenge-dialog__trained {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tem-challenge-dialog__dice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.25rem;
+    margin-bottom: 1rem;
+}
+
+.tem-challenge-dialog__dice img {
+    width: 2.25rem;
+    height: 2.25rem;
+    object-fit: contain;
+}
+
+.tem-challenge-dialog__keep-lowest {
+    white-space: nowrap;
+}
+
+.tem-challenge-dialog__circumstance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.tem-challenge-dialog__circumstance-control {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.tem-challenge-dialog__circumstance-control input {
+    width: 4ch;
+    text-align: center;
+}
+
+.tem-challenge-dialog__circumstance-value {
+    width: 4ch;
+    text-align: center;
+    display: inline-block;
+}
+
+.tem-challenge-dialog__circumstance-control button {
+    width: 2rem;
+    min-height: 2rem;
+    padding: 0;
+}
+
+.tem-challenge-dialog__value {
+    text-align: right;
+}
+
+.tem-challenge-roll {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.tem-challenge-roll__header {
+    margin-bottom: 1rem;
+}
+
+.tem-challenge-roll__header h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.2em;
+}
+
+.tem-challenge-roll__header p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.tem-challenge-roll__results {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.tem-challenge-roll__dice {
+    border: 1px solid #999;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.tem-challenge-roll__dice--hidden {
+    display: none;
+}
+
+.tem-challenge-roll__rolls {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tem-challenge-roll__die {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #999;
+    border-radius: 3px;
+    background-color: #fff;
+    font-weight: bold;
+}
+
+.tem-challenge-roll__die--success {
+    background-color: #c8e6c9;
+    border-color: #4caf50;
+    color: #1b5e20;
+}
+
+.tem-challenge-roll__summary {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #ddd;
+}
+
+.tem-challenge-roll__successes {
+    font-weight: bold;
+}
+
+.tem-challenge-roll__result {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.tem-challenge-roll__result--defeat {
+    color: #c41c3b;
+    background-color: #ffebee;
+}
+
+.tem-challenge-roll__result--unstable {
+    color: #f57f17;
+    background-color: #fff8e1;
+}
+
+.tem-challenge-roll__result--success {
+    color: #1565c0;
+    background-color: #e3f2fd;
+}
+
+.tem-challenge-roll__result--triumphant {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+}
+
+.tem-challenge-roll__result-description {
+    font-size: 0.9em;
+    font-weight: normal;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid currentColor;
+}
+
+.tem-challenge-roll__result-description--hidden {
+    display: none;
+}
+
+.tem-challenge-roll__adept,
+.tem-challenge-roll__formidable,
+.tem-challenge-roll__keep-lowest {
+    font-style: italic;
+    color: #666;
 }
 
 .tem-bio {
@@ -438,10 +693,38 @@
     gap: 0.75rem;
 }
 
+.tem-devotion-item-sheet__field.tem-devotion-item-sheet__field--multiline,
+.tem-base-item-sheet__field.tem-base-item-sheet__field--multiline {
+    align-items: start;
+}
+
 .tem-devotion-item-sheet__field input[type="text"],
-.tem-devotion-item-sheet__field input[type="number"] {
+.tem-devotion-item-sheet__field input[type="number"],
+.tem-devotion-item-sheet__field textarea {
     width: 100%;
     min-width: 0;
+}
+
+.tem-devotion-item-sheet__field textarea {
+    resize: vertical;
+}
+
+.tem-devotion-item-sheet__rank {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.4rem;
+}
+
+.tem-devotion-item-sheet__rank-button {
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 0;
+}
+
+.tem-devotion-item-sheet__rank-value {
+    min-width: 1.4rem;
+    text-align: center;
 }
 
 .tem-devotion-item-sheet__denied {
@@ -475,6 +758,35 @@
 
 .tem-base-item-sheet__field textarea {
     resize: vertical;
+}
+
+.tem-base-item-sheet__uses-boxes {
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.tem-base-item-sheet__uses-boxes input {
+    margin: 0;
+}
+
+.tem-base-item-sheet__level {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.4rem;
+}
+
+.tem-base-item-sheet__level-button {
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 0;
+}
+
+.tem-base-item-sheet__level-value {
+    min-width: 1.4rem;
+    text-align: center;
 }
 
 .tem-base-item-sheet__checkbox {

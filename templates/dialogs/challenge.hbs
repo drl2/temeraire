@@ -1,0 +1,60 @@
+<div class="tem-challenge-dialog">
+	<div class="tem-challenge-dialog__dice" data-dice-display data-dice-total role="group" aria-label="{{localize 'Temeraire.DiceToRoll'}}: {{diceToRoll}}{{#if keepLowest}}, {{localize 'Temeraire.KeepLowest'}}{{/if}}">
+		{{#each dice}}
+		<img src="systems/temeraire/assets/misc/die.svg" alt="" aria-hidden="true">
+		{{/each}}
+	</div>
+
+	<div class="tem-challenge-dialog__fieldsets">
+		<fieldset class="tem-challenge-dialog__modifiers">
+			<legend>{{localize "Temeraire.BonusDice"}}</legend>
+			{{#if showTrained}}
+			<div class="form-group tem-challenge-dialog__trained">
+				<label for="challenge-trained">{{localize trainedLabelKey}}</label>
+				{{#if trainedIsSelectable}}
+				<input id="challenge-trained" name="trainedBonus" type="checkbox" value="1">
+				{{else}}
+				<span class="tem-challenge-dialog__value">{{trainedBonus}}</span>
+				{{/if}}
+			</div>
+			{{/if}}
+			<div class="tem-challenge-dialog__circumstance">
+				<label for="challenge-circumstance">{{localize "Temeraire.Circumstance"}}</label>
+				<div class="tem-challenge-dialog__circumstance-control">
+					<button type="button" data-circumstance-delta="-1" aria-label="{{localize 'Temeraire.DecreaseCircumstance'}}">-</button>
+					<span id="challenge-circumstance" name="circumstance" class="tem-challenge-dialog__circumstance-value">0</span>
+					<input type="hidden" name="circumstance" value="0">
+					<button type="button" data-circumstance-delta="1" aria-label="{{localize 'Temeraire.IncreaseCircumstance'}}">+</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="challenge-resource">{{localize "Temeraire.ITEM_TYPES.resource"}}</label>
+				<select id="challenge-resource" name="resourceId">
+					<option value="">{{localize "Temeraire.None"}}</option>
+					{{#each resources}}
+					<option value="{{id}}">{{name}}</option>
+					{{/each}}
+				</select>
+			</div>
+		</fieldset>
+		<fieldset class="tem-challenge-dialog__successes">
+			<legend>{{localize "Temeraire.SuccessModifiers"}}</legend>
+			{{#if showAdept}}
+			<div class="form-group tem-challenge-dialog__adept">
+				<label for="challenge-adept">{{localize "Temeraire.AdeptSuccessOnFail"}}</label>
+				<input id="challenge-adept" name="addOnFail" type="checkbox" value="1">
+			</div>
+			{{/if}}
+			{{#if showMasterSuccess}}
+			<div class="form-group tem-challenge-dialog__master">
+				<label>{{localize "Temeraire.SKILL_LEVELS.Master"}}</label>
+				<span class="tem-challenge-dialog__value">1</span>
+			</div>
+			{{/if}}
+			<div class="form-group tem-challenge-dialog__formidable">
+				<label for="challenge-formidable">{{localize "Temeraire.FormidableModifier"}}</label>
+				<input id="challenge-formidable" name="formidableBonus" type="checkbox" value="1">
+			</div>
+		</fieldset>
+	</div>
+</div>
