@@ -4,7 +4,7 @@
   "description": "Game system for the Temeraire tabletop RPG.",
   "version": "1.0.0",
   "manifest": "https://github.com/drl2/temeraire/releases/latest/download/system.json",
-  "download": "https://github.com/drl2/temeraire/releases/latest/download/system.zip",
+  "download": "https://github.com/drl2/temeraire/releases/latest/download/temeraire.zip",
   "compatibility": {
     "minimum": 14,
     "verified": 14
