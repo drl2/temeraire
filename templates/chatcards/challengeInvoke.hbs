@@ -1,0 +1,21 @@
+<div class="tem-challenge-roll">
+	<div class="tem-challenge-roll__header">
+		<h3>{{invokedName}}</h3>
+	</div>
+	<div class="tem-challenge-roll__rolls">
+		{{#each dice}}
+		<span class="tem-challenge-roll__die {{#if (gte result 5)}}tem-challenge-roll__die--success{{/if}}">{{result}}</span>
+		{{/each}}
+	</div>
+	<div class="tem-challenge-roll__summary">
+		<div class="tem-challenge-roll__successes">
+			<strong>{{localize "Temeraire.TotalHits"}}</strong>: {{totalHits}}
+		</div>
+		<div class="tem-challenge-roll__result tem-challenge-roll__result--{{#if (eq level 'Defeat')}}defeat{{else if (eq level 'Unstable')}}unstable{{else if (eq level 'Success')}}success{{else}}triumphant{{/if}}" data-toggle-result style="cursor: pointer;" title="{{localize 'Temeraire.ShowDetail'}}">
+			<strong>{{resultLabel}}</strong>
+			<div class="tem-challenge-roll__result-description tem-challenge-roll__result-description--hidden">
+				{{resultDescription}}
+			</div>
+		</div>
+	</div>
+</div>

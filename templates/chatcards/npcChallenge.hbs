@@ -1,0 +1,21 @@
+<div class="tem-challenge-roll">
+	<div class="tem-challenge-roll__header">
+		<h3>{{attributeLabel}}</h3>
+		<p>{{actorName}}</p>
+	</div>
+	<div class="tem-challenge-roll__rolls">
+		{{#each rolls}}
+		<span class="tem-challenge-roll__die {{#if (gte this 5)}}tem-challenge-roll__die--success{{/if}}">{{this}}</span>
+		{{/each}}
+	</div>
+	<div class="tem-challenge-roll__summary">
+		<div class="tem-challenge-roll__successes">
+			<strong>{{localize "Temeraire.TotalHits"}}</strong>: {{hits}}
+		</div>
+		{{#if keepLowest}}
+		<div class="tem-challenge-roll__keep-lowest">
+			<em>{{localize "Temeraire.KeepLowest"}}</em>
+		</div>
+		{{/if}}
+	</div>
+</div>

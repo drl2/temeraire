@@ -18,6 +18,12 @@
 				{{/if}}
 			</div>
 			{{/if}}
+			{{#if burdenPenalty}}
+			<div class="form-group tem-challenge-dialog__burdens">
+				<label>{{localize "Temeraire.Burdens"}}</label>
+				<span class="tem-challenge-dialog__value">-{{burdenPenalty}}</span>
+			</div>
+			{{/if}}
 			<div class="tem-challenge-dialog__circumstance">
 				<label for="challenge-circumstance">{{localize "Temeraire.Circumstance"}}</label>
 				<div class="tem-challenge-dialog__circumstance-control">

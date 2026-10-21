@@ -3,15 +3,14 @@
   "title": "Temeraire",
   "description": "Game system for the Temeraire tabletop RPG.",
   "version": "1.0.0",
+
   "compatibility": {
     "minimum": 14,
     "verified": 14
   },
  "authors": [{
     "name": "Don Lloyd",
-    "url": "YOUR WEBSITE ADDRESS HERE",
-    "email": "YOUR EMAIL ADDRESS HERE",
-    "discord": "YOUR DISCORD USERNAME HERE"
+    "url": "https://gaming.drl2.com/"
   }],
 "esmodules": ["temeraire.mjs"],
 "styles": ["temeraire.css"],

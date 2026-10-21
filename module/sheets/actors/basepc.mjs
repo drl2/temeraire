@@ -40,6 +40,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
             changeDangerBoxes: this._onChangeDangerBoxes,
             createDevotionItem: this._onCreateDevotionItem,
             editDevotionItem: this._onEditDevotionItem,
+            testDevotion: this._onTestDevotion,
             deleteDevotionItem: this._onDeleteDevotionItem,
             updateDevotionChecked: this._onUpdateDevotionChecked,
             updateDevotionDenied: this._onUpdateDevotionDenied,
@@ -116,6 +117,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
                     name: item.name,
                     denied: item.system.denied,
                     rank,
+                    checked,
                     boxes: Array.from({ length: rank }, (_, index) => ({
                         checked: index < checked,
                         number: index + 1
@@ -210,6 +212,50 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
     static async _onEditDevotionItem(event, target) {
         const item = this.actor.items.get(target.dataset.itemId);
         await item?.sheet?.render(true);
+    }
+
+    static async _onTestDevotion(event, target) {
+        const item = this.actor.items.get(target.dataset.itemId);
+        if (!item || !["duty", "desire"].includes(item.type)) return;
+
+        const checked = Math.max(0, Number(item.system.checked) || 0);
+        if (checked <= 0) {
+            ui.notifications.warn(game.i18n.format("Temeraire.NothingToTest", { name: item.name }));
+            return;
+        }
+
+        const roll = new Roll(`${checked}d6`);
+        await roll.evaluate();
+        const results = roll.dice[0].results.map(r => r.result);
+        const hits = results.filter(result => result >= 5).length;
+        const remainingChecked = checked - hits;
+        const counterCandidates = type => this.actor.items
+            .filter(i => i.type === type && i.id !== item.id && !i.system.denied && (Number(i.system.checked) || 0) < (Number(i.system.rank) || 0))
+            .map(i => ({ id: i.id, name: i.name }));
+        const counterDuties = counterCandidates("duty");
+        const counterDesires = counterCandidates("desire");
+        if (hits > 0) await item.update({ "system.checked": remainingChecked });
+        const content = await foundry.applications.handlebars.renderTemplate(
+            "systems/temeraire/templates/chatcards/testDevotion.hbs",
+            {
+                actorName: this.actor.name,
+                title: game.i18n.format(item.type === "duty" ? "Temeraire.TestingDuty" : "Temeraire.TestingDesire", { name: item.name }),
+                rolls: results,
+                hits,
+                choices: Array.from({ length: hits }, (_, index) => index + 1),
+                counterDuties,
+                counterDesires,
+                checksRemoved: hits,
+                remainingChecked
+            }
+        );
+
+        await ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content,
+            rolls: [roll],
+            flags: { temeraire: { devotionTest: { type: item.type, itemId: item.id, hits, applied: false } } }
+        });
     }
 
     static async _onDeleteDevotionItem(event, target) {
@@ -416,7 +462,9 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
         const trainedLabelKey = skillValue === 2 ? "Temeraire.SKILL_LEVELS.Adept" : "Temeraire.SKILL_LEVELS.Trained";
         const showAdept = skillValue === 2;
         const showMasterSuccess = skillValue === 3;
-        const diceToRoll = attributeValue + trainedBonus;
+        const burdens = this.actor.system.burdens ?? {};
+        const burdenPenalty = Math.max(0, Number(burdens.duty) || 0, Number(burdens.desire) || 0);
+        const diceToRoll = attributeValue + trainedBonus - burdenPenalty;
         const keepLowest = diceToRoll <= 0;
         const dice = Array.from({ length: keepLowest ? 2 : diceToRoll });
         const resources = Array.from(this.actor.items)
@@ -438,6 +486,7 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
                 trainedLabelKey,
                 showAdept,
                 showMasterSuccess,
+                burdenPenalty,
                 diceToRoll,
                 keepLowest,
                 dice,
@@ -476,6 +525,8 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
 
                     // Determine result based on modifiers
                     let successCount = 0;
+                    const activeDice = roll.dice[0].results.filter(die => die.active);
+                    const allDiceSucceeded = activeDice.length > 0 && activeDice.every(die => die.result >= 5);
                     for (const die of roll.dice[0].results) {
                         // Only count dice that are active (kept, not dropped)
                         if (die.active && die.result >= 5) successCount++;
@@ -507,6 +558,14 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
                         }
                     }
 
+                    const hasUnchecked = i => !i.system.denied && (Number(i.system.checked) || 0) < (Number(i.system.rank) || 0);
+                    const invokableDuties = this.actor.items
+                        .filter(i => i.type === "duty" && hasUnchecked(i))
+                        .map(i => ({ id: i.id, name: i.name }));
+                    const invokableDesires = this.actor.items
+                        .filter(i => i.type === "desire" && hasUnchecked(i))
+                        .map(i => ({ id: i.id, name: i.name }));
+
                     const chatContent = await foundry.applications.handlebars.renderTemplate(
                         "systems/temeraire/templates/chatcards/challengeRoll.hbs",
                         {
@@ -516,7 +575,12 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
                             attributeValue,
                             trainedBonus: skillValue === 1 || trainedBonusChecked ? 1 : 0,
                             trainedLabel: game.i18n.localize(trainedLabelKey),
+                            actorId: this.actor.id,
+                            duties: invokableDuties,
+                            devotions: invokableDesires,
+                            hasInvokableItems: !allDiceSucceeded && (invokableDuties.length > 0 || invokableDesires.length > 0),
                             circumstance,
+                            burdenPenalty,
                             resourceName,
                             diceRolled: adjustedDiceToRoll,
                             rolls: roll.dice[0].results.map(r => r.result),
@@ -532,7 +596,17 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
                     await ChatMessage.create({
                         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                         content: chatContent,
-                        rolls: [roll]
+                        rolls: [roll],
+                        flags: {
+                            temeraire: {
+                                challenge: {
+                                    dice: roll.dice[0].results.map(r => ({ result: r.result, active: r.active !== false })),
+                                    formidableChecked: formidableBonusChecked,
+                                    adeptChecked: adeptBonusChecked,
+                                    masterSuccess
+                                }
+                            }
+                        }
                     });
 
                     // Decrement resource uses if a resource was selected
@@ -701,6 +775,66 @@ export default class BaseActorSheet extends HandlebarsApplicationMixin(ActorShee
 
 }
 
+// A duty turns one failed die into a 6; a desire re-rolls every failed die. Posts the recalculated result.
+async function postInvokeResult(message, actor, item) {
+    const data = message.getFlag("temeraire", "challenge");
+    const dice = data?.dice?.map(die => ({ ...die }));
+    const failed = dice?.filter(die => die.active && die.result < 5) ?? [];
+    if (!failed.length) return;
+
+    let reroll = null;
+    if (item.type === "duty") {
+        failed[0].result = 6;
+        failed[0].changed = true;
+    } else {
+        reroll = new Roll(`${failed.length}d6`);
+        await reroll.evaluate();
+        reroll.dice[0].results.forEach((r, i) => {
+            failed[i].result = r.result;
+            failed[i].changed = true;
+        });
+    }
+
+    let successCount = dice.filter(die => die.active && die.result >= 5).length;
+    const formidableApplied = data.formidableChecked && successCount > 0;
+    if (formidableApplied) successCount--;
+    const adeptSuccess = data.adeptChecked && successCount === 0;
+    if (adeptSuccess) successCount = 1;
+    const totalHits = successCount + (data.masterSuccess ?? 0);
+
+    const level = totalHits === 0 ? "Defeat" : totalHits === 1 ? "Unstable" : totalHits === 2 ? "Success" : "Triumphant";
+    const content = await foundry.applications.handlebars.renderTemplate(
+        "systems/temeraire/templates/chatcards/challengeInvoke.hbs",
+        {
+            invokedName: game.i18n.format("Temeraire.ActorInvokes", { actor: actor.name, name: item.name }),
+            dice,
+            totalHits,
+            level,
+            resultLabel: game.i18n.localize({
+                Defeat: "Temeraire.Defeat",
+                Unstable: "Temeraire.UnstableResult",
+                Success: "Temeraire.Success",
+                Triumphant: "Temeraire.TriumphantSuccess"
+            }[level]),
+            resultDescription: game.i18n.localize({
+                Defeat: "ResultDescriptions.Defeat",
+                Unstable: "ResultDescriptions.UnstableResult",
+                Success: "ResultDescriptions.Success",
+                Triumphant: "ResultDescriptions.TriumphantSuccess"
+            }[level])
+        }
+    );
+
+    await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        content,
+        ...(reroll ? { rolls: [reroll] } : {})
+    });
+    if (message.canUserModify(game.user, "update")) {
+        await message.setFlag("temeraire", "challenge", { ...data, dice });
+    }
+}
+
 // Hook for challenge roll dice display toggle
 Hooks.on("renderChatMessageHTML", (_message, html) => {
     const diceDisplay = html.querySelector("[data-toggle-dice]");
@@ -710,6 +844,71 @@ Hooks.on("renderChatMessageHTML", (_message, html) => {
         rollsContainer.addEventListener("click", (event) => {
             event.stopPropagation();
             diceDisplay.classList.toggle("tem-challenge-roll__dice--hidden");
+        });
+    }
+
+    const invokeSelect = html.querySelector("select[data-invoke-select]");
+    const invokeButton = html.querySelector("button[data-invoke]");
+    const updateInvokeButton = () => {
+        if (invokeButton) invokeButton.disabled = !invokeSelect?.selectedOptions[0]?.dataset.invokeType;
+    };
+
+    invokeSelect?.addEventListener("change", updateInvokeButton);
+    updateInvokeButton();
+
+    invokeButton?.addEventListener("click", async (event) => {
+        event.stopPropagation();
+        const actor = game.actors.get(_message.speaker?.actor);
+        const item = actor?.items.get(invokeSelect?.value);
+        if (!actor?.isOwner || !["duty", "desire"].includes(item?.type)) return;
+
+        const checked = Number(item.system.checked) || 0;
+        if (item.system.denied || checked >= (Number(item.system.rank) || 0)) {
+            ui.notifications.warn(game.i18n.format("Temeraire.CannotInvoke", { name: item.name }));
+            return;
+        }
+        await item.update({ "system.checked": checked + 1 });
+        if (checked + 1 >= (Number(item.system.rank) || 0)) {
+            invokeSelect.selectedOptions[0].remove();
+            invokeSelect.value = "";
+            updateInvokeButton();
+        }
+
+        await postInvokeResult(_message, actor, item);
+    });
+
+    const applyChoicesButton = html.querySelector("button[data-apply-devotion-choices]");
+    if (applyChoicesButton) {
+        const testData = _message.getFlag("temeraire", "devotionTest");
+        const choiceSelects = Array.from(html.querySelectorAll("select[data-devotion-choice]"));
+        if (testData?.applied) {
+            choiceSelects.forEach((select, index) => {
+                select.value = testData.choices?.[index] ?? select.value;
+                select.disabled = true;
+            });
+            applyChoicesButton.disabled = true;
+        }
+
+        applyChoicesButton.addEventListener("click", async (event) => {
+            event.stopPropagation();
+            const actor = game.actors.get(_message.speaker?.actor);
+            const data = _message.getFlag("temeraire", "devotionTest");
+            if (!actor?.isOwner || !data || data.applied) return;
+
+            const choices = choiceSelects.map(select => select.value);
+            for (const choice of choices) {
+                if (choice === "burden") {
+                    const current = Number(actor.system.burdens?.[data.type]) || 0;
+                    await actor.update({ [`system.burdens.${data.type}`]: Math.min(5, current + 1) });
+                    continue;
+                }
+                const counter = actor.items.get(choice);
+                if (!counter || counter.id === data.itemId || !["duty", "desire"].includes(counter.type) || counter.system.denied) continue;
+                const rank = Number(counter.system.rank) || 0;
+                const current = Number(counter.system.checked) || 0;
+                await counter.update({ "system.checked": Math.min(rank, current + 2) });
+            }
+            await _message.setFlag("temeraire", "devotionTest", { ...data, applied: true, choices });
         });
     }
 

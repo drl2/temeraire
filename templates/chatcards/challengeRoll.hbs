@@ -19,6 +19,11 @@
 				{{localize "Temeraire.Circumstance"}}: {{circumstance}}
 			</div>
 			{{/if}}
+			{{#if burdenPenalty}}
+			<div>
+				{{localize "Temeraire.Burdens"}} -{{burdenPenalty}}
+			</div>
+			{{/if}}
 			{{#if resourceName}}
 			<div>
 				{{resourceName}}: 1
@@ -90,5 +95,30 @@
 			</div>
 			{{/if}}
 		</div>
+
+		{{#if hasInvokableItems}}
+		<div class="tem-challenge-roll__invoke">
+			<select data-invoke-select aria-label="{{localize 'Temeraire.Duties'}} / {{localize 'Temeraire.Desires'}}">
+				<option value="" selected disabled>{{localize "Temeraire.SelectDutyOrDesire"}}</option>
+				{{#if duties.length}}
+				<optgroup label="{{localize 'Temeraire.Duties'}}">
+					{{#each duties}}
+					<option value="{{id}}" data-invoke-type="duty">{{name}}</option>
+					{{/each}}
+				</optgroup>
+				{{/if}}
+				{{#if devotions.length}}
+				<optgroup label="{{localize 'Temeraire.Desires'}}">
+					{{#each devotions}}
+					<option value="{{id}}" data-invoke-type="desire">{{name}}</option>
+					{{/each}}
+				</optgroup>
+				{{/if}}
+			</select>
+			<div class="tem-challenge-roll__invoke-row">
+				<button type="button" data-invoke disabled aria-label="{{localize 'Temeraire.InvokeDevotion'}}" title="{{localize 'Temeraire.InvokeDevotion'}}">{{localize "Temeraire.InvokeDevotion"}}</button>
+			</div>
+		</div>
+		{{/if}}
 	</div>
 </div>

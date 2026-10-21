@@ -1,0 +1,45 @@
+<div class="tem-challenge-roll">
+	<div class="tem-challenge-roll__header">
+		<h3>{{title}}</h3>
+		<p>{{actorName}}</p>
+	</div>
+	<div class="tem-challenge-roll__rolls">
+		{{#each rolls}}
+		<span class="tem-challenge-roll__die {{#if (gte this 5)}}tem-challenge-roll__die--success{{/if}}">{{this}}</span>
+		{{/each}}
+	</div>
+	<div class="tem-challenge-roll__summary">
+		<div class="tem-challenge-roll__successes">
+			<strong>{{localize "Temeraire.TotalHits"}}</strong>: {{hits}}
+		</div>
+		<div class="tem-challenge-roll__keep-lowest">
+			<em>{{#if checksRemoved}}{{localize "Temeraire.ChecksRemoved"}}: {{checksRemoved}} ({{localize "Temeraire.ChecksRemaining"}}: {{remainingChecked}}){{else}}{{localize "Temeraire.NoChecksRemoved"}}{{/if}}</em>
+		</div>
+		{{#if hits}}
+		<div class="tem-challenge-roll__invoke">
+			{{#each choices}}
+			<select data-devotion-choice aria-label="{{localize 'Temeraire.HitChoice'}} {{this}}">
+				<option value="burden">{{localize "Temeraire.IncreaseBurden"}}</option>
+				{{#if ../counterDuties.length}}
+				<optgroup label="{{localize 'Temeraire.MarkTwoBoxesDuty'}}">
+					{{#each ../counterDuties}}
+					<option value="{{id}}">{{name}}</option>
+					{{/each}}
+				</optgroup>
+				{{/if}}
+				{{#if ../counterDesires.length}}
+				<optgroup label="{{localize 'Temeraire.MarkTwoBoxesDesire'}}">
+					{{#each ../counterDesires}}
+					<option value="{{id}}">{{name}}</option>
+					{{/each}}
+				</optgroup>
+				{{/if}}
+			</select>
+			{{/each}}
+			<div class="tem-challenge-roll__invoke-row">
+				<button type="button" data-apply-devotion-choices aria-label="{{localize 'Temeraire.Apply'}}" title="{{localize 'Temeraire.Apply'}}">{{localize "Temeraire.Apply"}}</button>
+			</div>
+		</div>
+		{{/if}}
+	</div>
+</div>

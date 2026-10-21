@@ -24,31 +24,40 @@
         <div class="tem-npc-sheet__details-columns">
             <div class="tem-npc-sheet__attributes">
                 <div class="tem-npc-sheet__attribute">
-                    <label for="npc-body-value">{{localize "Temeraire.ATTRIBUTES.body.label"}}</label>
+                    <button type="button" class="tem-npc-sheet__attribute-roll" data-action="rollNpcChallenge" data-attribute="body" title="{{localize 'Temeraire.RollChallenge'}}">{{localize "Temeraire.ATTRIBUTES.body.label"}}</button>
                     <input id="npc-body-value" type="number" name="system.attributes.body.value" value="{{system.attributes.body.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.body.label'}} {{localize 'Temeraire.Value'}}">
                     <input type="text" name="system.attributes.body.descriptor" value="{{system.attributes.body.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.body.label'}} {{localize 'Temeraire.Descriptor'}}">
                 </div>
                 <div class="tem-npc-sheet__attribute">
-                    <label for="npc-cunning-value">{{localize "Temeraire.ATTRIBUTES.cunning.label"}}</label>
+                    <button type="button" class="tem-npc-sheet__attribute-roll" data-action="rollNpcChallenge" data-attribute="cunning" title="{{localize 'Temeraire.RollChallenge'}}">{{localize "Temeraire.ATTRIBUTES.cunning.label"}}</button>
                     <input id="npc-cunning-value" type="number" name="system.attributes.cunning.value" value="{{system.attributes.cunning.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.cunning.label'}} {{localize 'Temeraire.Value'}}">
                     <input type="text" name="system.attributes.cunning.descriptor" value="{{system.attributes.cunning.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.cunning.label'}} {{localize 'Temeraire.Descriptor'}}">
                 </div>
                 <div class="tem-npc-sheet__attribute">
-                    <label for="npc-manners-value">{{localize "Temeraire.ATTRIBUTES.manners.label"}}</label>
+                    <button type="button" class="tem-npc-sheet__attribute-roll" data-action="rollNpcChallenge" data-attribute="manners" title="{{localize 'Temeraire.RollChallenge'}}">{{localize "Temeraire.ATTRIBUTES.manners.label"}}</button>
                     <input id="npc-manners-value" type="number" name="system.attributes.manners.value" value="{{system.attributes.manners.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.manners.label'}} {{localize 'Temeraire.Value'}}">
                     <input type="text" name="system.attributes.manners.descriptor" value="{{system.attributes.manners.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.manners.label'}} {{localize 'Temeraire.Descriptor'}}">
                 </div>
                 <div class="tem-npc-sheet__attribute">
-                    <label for="npc-steel-value">{{localize "Temeraire.ATTRIBUTES.steel.label"}}</label>
+                    <button type="button" class="tem-npc-sheet__attribute-roll" data-action="rollNpcChallenge" data-attribute="steel" title="{{localize 'Temeraire.RollChallenge'}}">{{localize "Temeraire.ATTRIBUTES.steel.label"}}</button>
                     <input id="npc-steel-value" type="number" name="system.attributes.steel.value" value="{{system.attributes.steel.value}}" min="0" max="4" step="1" aria-label="{{localize 'Temeraire.ATTRIBUTES.steel.label'}} {{localize 'Temeraire.Value'}}">
                     <input type="text" name="system.attributes.steel.descriptor" value="{{system.attributes.steel.descriptor}}" placeholder="{{localize 'Temeraire.Descriptor'}}" aria-label="{{localize 'Temeraire.ATTRIBUTES.steel.label'}} {{localize 'Temeraire.Descriptor'}}">
                 </div>
             </div>
             <div class="tem-npc-sheet__details-side">
-                <label class="tem-npc-sheet__resistance">
+                <div class="tem-npc-sheet__resistance">
                     <span>{{localize "Temeraire.Resistance"}}</span>
-                    <input type="number" name="system.resistance" value="{{system.resistance}}" min="0" step="1">
-                </label>
+                    <span class="tem-npc-sheet__resistance-actions">
+                        <button type="button" data-action="changeResistance" data-delta="-1" aria-label="{{localize 'Temeraire.DecreaseResistance'}}" title="{{localize 'Temeraire.DecreaseResistance'}}" {{#if atMinimumResistance}}disabled{{/if}}>-</button>
+                        <span class="tem-npc-sheet__resistance-value" aria-live="polite">{{resistanceValue}}</span>
+                        <button type="button" data-action="changeResistance" data-delta="1" aria-label="{{localize 'Temeraire.IncreaseResistance'}}" title="{{localize 'Temeraire.IncreaseResistance'}}">+</button>
+                    </span>
+                    <span class="tem-npc-sheet__resistance-boxes" role="group" aria-label="{{localize 'Temeraire.Resistance'}}">
+                        {{#each resistanceBoxes as |box|}}
+                        <input type="checkbox" data-action="updateResistanceSpent" aria-label="{{localize 'Temeraire.Resistance'}} {{box.number}}" {{#if box.checked}}checked{{/if}}>
+                        {{/each}}
+                    </span>
+                </div>
 
                 <label class="tem-npc-sheet__notes">
                     <span>{{localize "Temeraire.Notes"}}</span>

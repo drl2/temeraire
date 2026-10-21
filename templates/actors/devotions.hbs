@@ -29,7 +29,11 @@
 				{{#each devotionRows.duty as |item|}}
 					<div class="tem-devotions__item">
 						<div class="tem-devotions__item-details">
+							{{#if item.checked}}
+							<button type="button" class="tem-devotions__item-name" data-action="testDevotion" data-item-id="{{item.id}}" title="{{localize 'Temeraire.TestDuty'}}">{{item.name}}</button>
+							{{else}}
 							<span class="tem-devotions__item-name">{{item.name}}</span>
+							{{/if}}
 						</div>
 						<button
 							type="button"
@@ -103,7 +107,11 @@
 				{{#each devotionRows.desire as |item|}}
 					<div class="tem-devotions__item">
 						<div class="tem-devotions__item-details">
+							{{#if item.checked}}
+							<button type="button" class="tem-devotions__item-name" data-action="testDevotion" data-item-id="{{item.id}}" title="{{localize 'Temeraire.TestDesire'}}">{{item.name}}</button>
+							{{else}}
 							<span class="tem-devotions__item-name">{{item.name}}</span>
+							{{/if}}
 						</div>
 						<button
 							type="button"

@@ -1,0 +1,14 @@
+<form class="tem-initiative-dialog-form">
+	<div class="tem-initiative-dialog">
+		<p>{{localize "Temeraire.InitiativeDialogPrompt"}}</p>
+		<div class="form-group">
+			<label for="init-skill-select">{{localize "Temeraire.SelectSkillAttribute"}}</label>
+			<select id="init-skill-select" name="skillAttribute" required>
+				<option value="manual" selected>{{localize "Temeraire.Manual"}}</option>
+				{{#each skillOptions}}
+				<option value="{{this.value}}">{{this.label}}</option>
+				{{/each}}
+			</select>
+		</div>
+	</div>
+</form>

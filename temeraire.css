@@ -34,6 +34,31 @@
   min-width: 0;
   max-width: 100%;
 }
+.application.temeraire-sheet .window-content {
+  overflow-y: auto;
+}
+.tem-sheet-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.tem-sheet-layout__header {
+  flex: 0 0 auto;
+}
+.tem-sheet-layout__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+}
+.tem-sheet-layout__sidebar {
+  flex: 0 0 auto;
+}
+.tem-sheet-main {
+  flex: 1 1 0;
+  min-width: 0;
+}
 .tem-npc-sheet {
   display: grid;
   gap: 1rem;
@@ -89,6 +114,11 @@
   gap: 1rem;
   min-width: 0;
 }
+@media (max-width: 640px) {
+  .tem-npc-sheet__details-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 .tem-npc-sheet__attributes {
   display: grid;
   gap: 0.75rem;
@@ -115,15 +145,61 @@
   width: 60%;
   min-width: 0;
 }
-.tem-npc-sheet__resistance {
-  display: grid;
-  grid-template-columns: max-content 6ch;
-  align-items: center;
-  gap: 0.5rem;
+.tem-npc-sheet__attribute .tem-npc-sheet__attribute-roll {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  border-bottom: 0.5px solid currentColor;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
 }
-.tem-npc-sheet__resistance input {
-  width: 6ch;
+.tem-npc-sheet__resistance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+.tem-npc-sheet__resistance-actions,
+.tem-npc-sheet__resistance-boxes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+.tem-npc-sheet__resistance-actions {
+  gap: 0.1rem;
+}
+.tem-npc-sheet__resistance-actions button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  width: 1.1rem;
+  height: 1rem;
+  line-height: 0.9rem;
+  font-size: inherit;
+}
+.tem-npc-sheet__resistance-value {
+  min-width: 1.5ch;
   text-align: center;
+  font-weight: bold;
+}
+.tem-npc-sheet__resistance-boxes {
+  gap: 0.15rem;
+}
+.tem-npc-sheet__resistance-boxes input {
+  margin: 0;
 }
 .tem-npc-sheet__notes {
   display: grid;
@@ -135,49 +211,13 @@
   min-width: 0;
   resize: vertical;
 }
-@media (max-width: 640px) {
-  .tem-npc-sheet__details-columns {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-.tem-sidebar__attribute h4 {
-  margin: 0;
-  text-transform: uppercase;
-}
 .tem-sidebar {
   width: max-content;
   max-width: 100%;
 }
-.tem-sidebar__dangers {
-  margin-top: 1rem;
-}
-.tem-sidebar__dangers h4 {
-  text-align: center;
-}
-.application.temeraire-sheet .window-content {
-  overflow-y: auto;
-}
-.tem-sheet-layout {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-width: 0;
-}
-.tem-sheet-layout__header {
-  flex: 0 0 auto;
-}
-.tem-sheet-layout__body {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  min-width: 0;
-}
-.tem-sheet-layout__sidebar {
-  flex: 0 0 auto;
-}
-.tem-sheet-main {
-  flex: 1 1 0;
-  min-width: 0;
+.tem-sidebar__attribute h4 {
+  margin: 0;
+  text-transform: uppercase;
 }
 .tem-sidebar__attribute + .tem-sidebar__attribute {
   margin-top: 0.5rem;
@@ -191,6 +231,12 @@
   flex: 0 0 3ch;
   width: 3ch;
   font: inherit;
+  text-align: center;
+}
+.tem-sidebar__dangers {
+  margin-top: 1rem;
+}
+.tem-sidebar__dangers h4 {
   text-align: center;
 }
 .tem-sidebar__danger-value {
@@ -213,16 +259,20 @@
 }
 .tem-sidebar__danger-box-controls {
   display: inline-flex;
+  align-items: center;
   gap: 0.1rem;
 }
 .tem-sidebar__danger-box-controls button {
-  width: 1.1rem;
-  height: 1rem;
+  margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
+  cursor: pointer;
+  width: 1.1rem;
+  height: 1rem;
   line-height: 0.9rem;
+  font-size: inherit;
 }
 .tem-sidebar__danger-checkboxes {
   display: inline-flex;
@@ -241,41 +291,45 @@
 }
 .tem-sidebar__field span {
   flex: 1;
+  border: 0;
   border-bottom: 0.5px solid currentColor;
+  border-radius: 0;
+  border-bottom-width: 0.5px;
   padding-right: 0.5rem;
+}
+.tem-sidebar__field select {
+  width: max-content;
+  max-width: 100%;
 }
 .tem-sidebar__challenge {
   flex: 1;
   min-width: 0;
   justify-content: flex-start;
   padding: 0 0.5rem 0 0;
-  border: 0;
   border-bottom: 0.5px solid currentColor;
   border-radius: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
   background: transparent;
   box-shadow: none;
+  cursor: pointer;
   color: inherit;
   font: inherit;
-  text-align: left;
-}
-.tem-sidebar__field select {
-  width: max-content;
-  max-width: 100%;
+  line-height: inherit;
 }
 .tem-challenge-dialog__fieldsets {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
-.tem-challenge-dialog__modifiers {
-  display: grid;
-  gap: 0.5rem;
-}
+.tem-challenge-dialog__modifiers,
 .tem-challenge-dialog__successes {
   display: grid;
   gap: 0.5rem;
 }
-.tem-challenge-dialog__trained {
+.tem-challenge-dialog__trained,
+.tem-challenge-dialog__burdens {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -285,7 +339,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 2.25rem;
+  min-height: 2.75rem;
   margin-bottom: 1rem;
 }
 .tem-challenge-dialog__dice img {
@@ -311,15 +365,15 @@
   width: 4ch;
   text-align: center;
 }
-.tem-challenge-dialog__circumstance-value {
-  width: 4ch;
-  text-align: center;
-  display: inline-block;
-}
 .tem-challenge-dialog__circumstance-control button {
   width: 2rem;
   min-height: 2rem;
   padding: 0;
+}
+.tem-challenge-dialog__circumstance-value {
+  width: 4ch;
+  text-align: center;
+  display: inline-block;
 }
 .tem-challenge-dialog__value {
   text-align: right;
@@ -381,6 +435,21 @@
   gap: 0.5rem;
   padding-top: 0.75rem;
   border-top: 1px solid #ddd;
+}
+.tem-challenge-roll__invoke {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #ddd;
+}
+.tem-challenge-roll__invoke-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.tem-challenge-roll__invoke-row button {
+  white-space: nowrap;
 }
 .tem-challenge-roll__successes {
   font-weight: bold;
@@ -456,25 +525,39 @@
 .tem-bio__items-header h4 {
   margin: 0;
 }
+.tem-bio__items-header button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 0;
+  min-height: 0;
+  font-size: 0.85rem;
+  line-height: 1;
+}
 .tem-bio__item {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
-.tem-resources__resource {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: start;
-}
-.tem-resources__uses-boxes {
-  display: inline-flex;
-  grid-column: 1 / -1;
-  justify-self: end;
-  align-items: center;
-  gap: 0.15rem;
-}
-.tem-resources__uses-boxes input {
+.tem-bio__item button[data-action^="edit"],
+.tem-bio__item button[data-action^="delete"] {
   margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 0;
+  min-height: 0;
+  font-size: 0.85rem;
+  line-height: 1;
 }
 .tem-bio__item-name {
   flex: 1;
@@ -493,6 +576,24 @@
   cursor: pointer;
   overflow-wrap: anywhere;
 }
+.tem-bio__connection-description {
+  white-space: pre-wrap;
+}
+.tem-resources__resource {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: start;
+}
+.tem-resources__uses-boxes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  grid-column: 1 / -1;
+  justify-self: end;
+}
+.tem-resources__uses-boxes input {
+  margin: 0;
+}
 .tem-resources__crew-rating {
   margin-left: 0.5rem;
   margin-right: 0.25rem;
@@ -502,9 +603,6 @@
 }
 .tem-resources__crew-details {
   margin-right: 0.5rem;
-}
-.tem-bio__connection-description {
-  white-space: pre-wrap;
 }
 .tem-devotions__columns {
   display: grid;
@@ -518,6 +616,20 @@
 }
 .tem-devotions__header h4 {
   margin: 0;
+}
+.tem-devotions__header button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 0;
+  min-height: 0;
+  font-size: 0.85rem;
+  line-height: 1;
 }
 .tem-devotions__burden-boxes {
   display: flex;
@@ -540,6 +652,24 @@
   gap: 0.25rem;
   padding: 0.5rem;
 }
+.tem-devotions__item button[data-action^="edit"],
+.tem-devotions__item button[data-action^="delete"] {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 0;
+  min-height: 0;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+.tem-devotions__item > button {
+  align-self: flex-start;
+}
 .tem-devotions__item-details {
   display: grid;
   grid-column: 1;
@@ -549,6 +679,69 @@
 .tem-devotions__item-name {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+.tem-devotions__item .tem-devotions__item-details button.tem-devotions__item-name {
+  display: block;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+}
+.tem-devotions__item .tem-devotions__item-details button.tem-devotions__item-name:hover {
+  text-decoration: underline;
+}
+.tem-devotions__item-controls {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.35rem;
+}
+.tem-devotions__denied {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 15px;
+}
+.tem-devotions__denied input {
+  margin: 0;
+}
+.tem-devotions__rank-controls {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  gap: 0.35rem;
+}
+.tem-devotions__rank-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+.tem-devotions__rank-actions button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  width: 1.1rem;
+  height: 1rem;
+  line-height: 0.9rem;
+  font-size: inherit;
+}
+.tem-devotions__rank-boxes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+.tem-devotions__rank-boxes input {
+  margin: 0;
 }
 .tem-item-sheet-layout {
   display: grid;
@@ -566,27 +759,35 @@
 .tem-item-sheet-layout__content {
   min-width: 0;
 }
-.tem-devotion-item-sheet {
+.tem-devotion-item-sheet,
+.tem-base-item-sheet {
   display: grid;
   gap: 1rem;
 }
-.tem-devotion-item-sheet__field {
+.tem-devotion-item-sheet__field,
+.tem-base-item-sheet__field {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   align-items: center;
   gap: 0.75rem;
 }
 .tem-devotion-item-sheet__field.tem-devotion-item-sheet__field--multiline,
+.tem-base-item-sheet__field.tem-devotion-item-sheet__field--multiline,
+.tem-devotion-item-sheet__field.tem-base-item-sheet__field--multiline,
 .tem-base-item-sheet__field.tem-base-item-sheet__field--multiline {
   align-items: start;
 }
 .tem-devotion-item-sheet__field input[type="text"],
+.tem-base-item-sheet__field input[type="text"],
 .tem-devotion-item-sheet__field input[type="number"],
-.tem-devotion-item-sheet__field textarea {
+.tem-base-item-sheet__field input[type="number"],
+.tem-devotion-item-sheet__field textarea,
+.tem-base-item-sheet__field textarea {
   width: 100%;
   min-width: 0;
 }
-.tem-devotion-item-sheet__field textarea {
+.tem-devotion-item-sheet__field textarea,
+.tem-base-item-sheet__field textarea {
   resize: vertical;
 }
 .tem-devotion-item-sheet__rank {
@@ -612,30 +813,11 @@
 .tem-devotion-item-sheet__denied input {
   margin: 0;
 }
-.tem-base-item-sheet {
-  display: grid;
-  gap: 1rem;
-}
-.tem-base-item-sheet__field {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  align-items: center;
-  gap: 0.75rem;
-}
-.tem-base-item-sheet__field input[type="text"],
-.tem-base-item-sheet__field input[type="number"],
-.tem-base-item-sheet__field textarea {
-  width: 100%;
-  min-width: 0;
-}
-.tem-base-item-sheet__field textarea {
-  resize: vertical;
-}
 .tem-base-item-sheet__uses-boxes {
   display: inline-flex;
-  justify-self: start;
   align-items: center;
   gap: 0.15rem;
+  justify-self: start;
 }
 .tem-base-item-sheet__uses-boxes input {
   margin: 0;
@@ -663,81 +845,74 @@
 .tem-base-item-sheet__checkbox input {
   margin: 0;
 }
-.tem-devotions__item-controls {
+.tem-initiative-roll {
   display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 0.35rem;
+  gap: 0.75rem;
 }
-.tem-devotions__denied {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-left: 15px;
-}
-.tem-devotions__denied input {
+.tem-initiative-roll__header h3 {
   margin: 0;
+  font-size: 1.2em;
 }
-.tem-devotions__item > button {
-  align-self: flex-start;
+.tem-initiative-roll__results {
+  display: grid;
+  gap: 0.75rem;
 }
-.tem-devotions__rank-controls {
+.tem-initiative-roll__combatant {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+.tem-initiative-roll__name {
   display: flex;
-  justify-self: end;
+  gap: 0.5rem;
   align-items: center;
-  gap: 0.35rem;
+  font-weight: bold;
 }
-.tem-devotions__rank-actions,
-.tem-devotions__rank-boxes {
+.tem-initiative-roll__npc-label {
+  font-size: 0.8em;
+  color: #666;
+  font-style: italic;
+}
+.tem-initiative-roll__dice {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.tem-initiative-roll__die {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 3px;
 }
-.tem-devotions__rank-actions {
-  gap: 0.1rem;
+.tem-initiative-roll__die-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
 }
-.tem-devotions__rank-actions button {
-  width: 1.1rem;
-  height: 1rem;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  line-height: 0.9rem;
+.tem-initiative-roll__die-number {
+  position: relative;
+  font-weight: bold;
+  font-size: 1rem;
+  z-index: 1;
 }
-.tem-devotions__rank-boxes {
-  gap: 0.15rem;
+.tem-initiative-roll__die--hit {
+  background-color: #c8e6c9;
+  border-color: #4caf50;
+  color: #1b5e20;
 }
-.tem-devotions__rank-boxes input {
-  margin: 0;
+.tem-initiative-roll__hits {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: bold;
 }
-.tem-bio__item button[data-action^="edit"],
-.tem-bio__item button[data-action^="delete"],
-.tem-devotions__item button[data-action^="edit"],
-.tem-devotions__item button[data-action^="delete"] {
-  width: 1.25rem;
-  height: 1.25rem;
-  min-width: 0;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  font-size: 0.85rem;
-  line-height: 1;
-}
-.tem-bio__items-header button,
-.tem-devotions__header button {
-  width: 1.25rem;
-  height: 1.25rem;
-  min-width: 0;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  font-size: 0.85rem;
-  line-height: 1;
+.tem-initiative-roll__hits-label {
+  color: #666;
 }

@@ -1,0 +1,30 @@
+<div class="tem-initiative-roll">
+    <div class="tem-initiative-roll__header">
+        <h3>{{localize "Temeraire.InitiativeRoll"}}</h3>
+    </div>
+    
+    <div class="tem-initiative-roll__results">
+        {{#each combatants}}
+        <div class="tem-initiative-roll__combatant">
+            <div class="tem-initiative-roll__name">
+                <span class="tem-initiative-roll__actor-name">{{this.name}}</span>
+                {{#if this.isNpc}}<span class="tem-initiative-roll__npc-label">{{localize "Temeraire.NPC"}}</span>{{/if}}
+            </div>
+            
+            <div class="tem-initiative-roll__dice">
+                {{#each this.rolls}}
+                <span class="tem-initiative-roll__die {{#if (gte this 5)}}tem-initiative-roll__die--hit{{/if}}">
+                    <img src="systems/temeraire/assets/misc/die.svg" alt="die" class="tem-initiative-roll__die-image">
+                    <span class="tem-initiative-roll__die-number">{{this}}</span>
+                </span>
+                {{/each}}
+            </div>
+            
+            <div class="tem-initiative-roll__hits">
+                <span class="tem-initiative-roll__hits-label">{{localize "Temeraire.Hits"}}:</span>
+                <span class="tem-initiative-roll__hits-value">{{this.hits}}</span>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

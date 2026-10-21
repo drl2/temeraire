@@ -107,7 +107,7 @@ export class NPCActorModel extends foundry.abstract.TypeDataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
         const requiredInteger = {required: true, nullable: false, integer: true};
-        const abilityScore = {requiredInteger, min: 0, max: 4};
+        const abilityScore = {requiredInteger, min: 0, max: 4, initial: 0};
 
         return {
             look: new fields.StringField(),
@@ -131,7 +131,8 @@ export class NPCActorModel extends foundry.abstract.TypeDataModel {
                     descriptor: new fields.StringField()
                 })
             }),
-            resistance: new fields.NumberField({requiredInteger, min: 0}),
+            resistance: new fields.NumberField({requiredInteger, min: 1, initial: 1}),
+            resistanceSpent: new fields.NumberField({requiredInteger, min: 0, initial: 0}),
             notes: new fields.StringField()
         };
     }
